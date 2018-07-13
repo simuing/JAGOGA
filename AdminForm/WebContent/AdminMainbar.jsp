@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-<div class="navbar navbar-default" style="background-color: rgb(0, 135, 163);">
+<div class="navbar navbar-default" >
 	<div class="container" style="background-color: rgb(0, 135, 163);">
 		<div class="navbar-header">
 			<a class="navbar-brand mainbar" href="#">
@@ -13,7 +13,7 @@
 					<a href="#" class="glyphicon glyphicon-fire" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
 					style="font-size:20px;"></a>
 					<ul class="dropdown-menu" role="menu">
-						<li><a href="#">로그아웃</a></li>
+						<li><a href="#">로그아웃했다.</a></li>
 					</ul>
 				</li>
 			</ul>
