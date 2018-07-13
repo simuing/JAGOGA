@@ -1,0 +1,8 @@
+INDEX VERSION 1.3+C:\JAGOGAgit\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+3222476315.index
+3985408067.index
+409571643.index
+2783678266.index
+704333489.index
+2397783799.index
+1541301084.index
