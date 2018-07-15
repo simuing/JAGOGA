@@ -164,6 +164,17 @@ div.navbar .navbar-default { margin-bottom: 0px; }
 	color: red;
 }
 
+/* 검증관리 */
+p.gradestate
+{
+	font-size: 6rem;
+	text-align: center;
+}
+p.vfile
+{
+	font-size: 2rem;
+	text-align: center;
+}
 
 /* 전체 버튼 css */
 .updatebtn, .deletebtn, .unhidebtn

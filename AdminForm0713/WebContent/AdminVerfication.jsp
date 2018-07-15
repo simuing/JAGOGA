@@ -200,6 +200,34 @@
 				</div>
 				<!-- END 숙소목록 -->
 				
+				<!-- 검증대기 페이지출력 -->
+				<div class="panel panel-headline">
+					<div class="panel-heading">
+						<div class="row">
+							<div class="col-md-12">
+								<h3 class="panel-title">검증 내용 조회</h3>
+								<div class="right">
+									<button type="button" class="btn-toggle-collapse">
+										<i class="lnr lnr-chevron-down"></i>
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-md-12">
+								<p class="gradestate">B → A</p>
+								<p class="vfile"><a>호스트 제출 서류</a></p>
+								<input class="form-control" type="text" placeholder="검증을 시작할 관리자아이디를 입력하세요."
+								style="text-align:center;"><br>
+								<button type="button"  class="btn btn-default updatebtn" style="width:100%; height: 50px; font-size:20px;">검증시작</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- 검증대기 페이지출력 -->
+				
 			</div>
 		</div>
 	</div>

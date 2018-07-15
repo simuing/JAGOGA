@@ -183,12 +183,36 @@
 				</div>
 				<!-- END 공지목록 -->
 				<!-- 공지등록 -->
-				<div>
-				
+				<div class="panel panel-headline">
+					<div class="panel-heading">
+						<div class="row">
+							<div class="col-md-12">
+								<h3 class="panel-title">공지등록</h3>
+								<div class="right">
+									<button type="button" class="btn-toggle-collapse">
+										<i class="lnr lnr-chevron-down"></i>
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="form-group col-md-12">
+									공지제목
+									<input type="text" class="form-control" value=""><br>
+									공지내용
+									<textarea class="form-control" rows="10" style="resize:none;"></textarea><br>
+									<input type="file"><br>
+									숨김여부<input type="checkbox">
+								</div>
+								<button type="button"  class="btn btn-default insertbtn" style="width:100%; height: 30px;">등록</button>
+							</div>
+						</div>
+					</div>
 				</div>
 				<!-- END 공지등록 -->
-				
-				
 				<!-- 이용가이드 -->
 				<div class="panel panel-headline">
 					<div class="panel-heading">

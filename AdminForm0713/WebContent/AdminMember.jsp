@@ -59,7 +59,7 @@
 					</div>
 					<div class="panel-body">
 					    <div class="row">    
-					        <div class="col-md-8">
+					        <div class="col-md-6">
 							    <div class="input-group">
 					                <div class="input-group-btn search-panel">
 					                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">

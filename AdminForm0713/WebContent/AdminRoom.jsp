@@ -187,7 +187,50 @@
 					</div>
 				</div>
 				<!-- END 숙소목록 -->
-				
+				<!-- 숙소조회 -->
+				<div class="panel panel-headline">
+					<div class="panel-heading">
+						<div class="row">
+							<div class="col-md-12">
+								<h3 class="panel-title">숙소 상세조회</h3>
+								<div class="right">
+									<button type="button" class="btn-toggle-collapse">
+										<i class="lnr lnr-chevron-down"></i>
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-md-12">
+								<p class="right"><a>site view</a></p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- 숙소조회 -->
+				<!-- 숙소후기조회 -->
+				<div class="panel panel-headline">
+					<div class="panel-heading">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="right">
+									<button type="button" class="btn-toggle-collapse">
+										<i class="lnr lnr-chevron-down"></i>
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-md-12">
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- 숙소후기조회 -->
 			</div>
 		</div>
 	</div>
