@@ -120,7 +120,7 @@
 				<!-- MULTI CHARTS -->
 				<div class="row">
 					<div class="col-md-3">
-						<div class="panel">
+						<div class="panel panel-headline">
 							<div class="panel-heading">
 								<h3 class="panel-title">매출 추이</h3>
 							</div>
@@ -132,7 +132,7 @@
 					<!-- END MULTI CHARTS -->
 					<!-- RECENT PURCHASES -->
 					<div class="col-md-6">
-						<div class="panel">
+						<div class="panel panel-headline">
 							<div class="panel-heading">
 								<h3 class="panel-title">회원수 통계</h3>
 							</div>
@@ -156,21 +156,20 @@
 					<!-- END RECENT PURCHASES -->
 					<!-- REALTIME CHART -->
 					<div class="col-md-3">
-						<div class="panel">
+						<div class="panel panel-headline">
 							<div class="panel-heading">
-								<h3 class="panel-title">System Load</h3>
+								<h3 class="panel-title">JAGOGA</h3>
 							</div>
 							<div class="panel-body">
 								<div id="system-load" class="easy-pie-chart" data-percent="70">
 									<span class="percent">70</span>
 								</div>
-								<h4>CPU Load</h4>
+								<h4>Happy Load</h4>
 								<ul class="list-unstyled list-justify">
-									<li>High: <span>95%</span></li>
-									<li>Average: <span>87%</span></li>
-									<li>Low: <span>20%</span></li>
-									<li>Threads: <span>996</span></li>
-									<li>Processes: <span>259</span></li>
+									<li>Thinking: <span>95%</span></li>
+									<li>Energy: <span>87%</span></li>
+									<li>Fail: <span>20%</span></li>
+									<li>Happy: <span>996</span></li>
 								</ul>
 							</div>
 						</div>
@@ -182,7 +181,7 @@
 					<div class="col-md-12">
 						<div class="row">
 							<div class="col-md-12">
-								<div class="panel">
+								<div class="panel panel-headline">
 									<div class="panel-heading">
 										<h3 class="panel-title">에티켓 등급별 회원수 통계</h3>
 										<div class="row">
@@ -346,9 +345,9 @@ $(function() {
 
 	// visits chart
 	data = {
-		labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+		labels: ['1월', '2월', '3월', '4월', '5월', '6월'],
 		series: [
-			[6384, 6342, 5437, 2764, 3958, 5068, 7654]
+			[6384, 6342, 5437, 2764, 3958, 5068]
 		]
 	};
 

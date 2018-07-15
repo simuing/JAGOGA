@@ -43,31 +43,99 @@
 	<div class="main">
 		<div class="main-content">
 			<div class="container-fluid">
-			
-			
-				<!-- 기본 백지 -->
-				<div class="panel panel-headline">
-					<div class="panel-heading">
-						<div class="row">
-							<div class="col-md-12">
-								<h3 class="panel-title">에티켓 등급별 회원수 통계</h3>
-								<div class="right">
-									<button type="button" class="btn-toggle-collapse">
-										<i class="lnr lnr-chevron-down"></i>
-									</button>
+				<!-- 문의 내용 -->
+				<div class="row">
+					<div class="col-md-5">
+						<div class="panel panel-headline">
+							<div class="panel-heading">
+								<div class="row">
+									<div class="col-md-12">
+										<h3 class="panel-title">문의 내용</h3>
+										<div class="right">
+											<button type="button" class="btn-toggle-collapse">
+												<i class="lnr lnr-chevron-down"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-md-12">
+									adsf
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="panel-body">
-						<div class="row">
-							<div class="col-md-12">
+					<!-- END 문의 내용 -->
+					<!-- 문의 목록 -->
+					<div class="col-md-7">
+						<div class="panel panel-headline">
+							<div class="panel-heading">
+								<div class="row">
+									<div class="col-md-12">
+										<h3 class="panel-title">문의 목록</h3>
+										<div class="right">
+											<button type="button" class="btn-toggle-collapse">
+												<i class="lnr lnr-chevron-down"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="panel-body">
+								<table class="table">
+									<thead>
+										<tr>
+											<th>문의코드</th>
+											<th>문의분류</th>
+											<th>문의내용</th>
+											<th>문의아이디</th>
+											<th>답변상태</th>
+											<th>답변아이디</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>1</td>
+											<td>[이용문의]</td>
+											<td>정보수정이안돼요.</td>
+											<td>steve</td>
+											<td>대기</td>
+											<td>testid2</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>[예약문의]</td>
+											<td>Jobs</td>
+											<td>steve</td>
+											<td>대기</td>
+											<td></td>
+										</tr>
+										<tr>
+											<td>3</td>
+											<td>Simon</td>
+											<td>Philips</td>
+											<td>@simon</td>
+											<td>완료</td>
+											<td>helper</td>
+										</tr>
+										<tr>
+											<td>4</td>
+											<td>Jane</td>
+											<td>Doe</td>
+											<td>@jane</td>
+											<td></td>
+											<td></td>
+										</tr>
+									</tbody>
+								</table>
 							</div>
 						</div>
 					</div>
 				</div>
-				<!-- END 기본 백지 -->
-				
+				<!-- END 문의목록 -->
 			</div>
 		</div>
 	</div>

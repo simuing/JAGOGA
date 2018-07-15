@@ -70,12 +70,12 @@
 			<div class="container-fluid">
 			
 			
-				<!-- 기본 백지 -->
+				<!-- 기본 백지 12 -->
 				<div class="panel panel-headline">
 					<div class="panel-heading">
 						<div class="row">
 							<div class="col-md-12">
-								<h3 class="panel-title">에티켓 등급별 회원수 통계</h3>
+								<h3 class="panel-title">col-md-12</h3>
 								<div class="right">
 									<button type="button" class="btn-toggle-collapse">
 										<i class="lnr lnr-chevron-down"></i>
@@ -92,6 +92,55 @@
 					</div>
 				</div>
 				<!-- END 기본 백지 -->
+				<!-- 기본 백지 12 -->
+				<div class="row">
+					<div class="col-md-6">
+						<div class="panel panel-headline">
+							<div class="panel-heading">
+								<div class="row">
+									<div class="col-md-12">
+										<h3 class="panel-title">col-md-6</h3>
+										<div class="right">
+											<button type="button" class="btn-toggle-collapse">
+												<i class="lnr lnr-chevron-down"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-md-12">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- END 기본 백지 -->
+					<div class="col-md-6">
+						<div class="panel panel-headline">
+							<div class="panel-heading">
+								<div class="row">
+									<div class="col-md-12">
+										<h3 class="panel-title">col-md-6</h3>
+										<div class="right">
+											<button type="button" class="btn-toggle-collapse">
+												<i class="lnr lnr-chevron-down"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-md-12">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- END 기본 백지 -->
+				</div>
 				
 			</div>
 		</div>
