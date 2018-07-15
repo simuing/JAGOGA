@@ -134,8 +134,8 @@
 										<tr>
 											<td>1</td>
 											<td>admin</td>
+											<td><a>@steve</a></td>
 											<td>Jobs</td>
-											<td>@steve</td>
 											<td>testid1</td>
 											<td>testid2</td>
 											<td>예약중</td>
@@ -143,29 +143,29 @@
 										<tr>
 											<td>2</td>
 											<td>Steve</td>
+											<td><a>@steve</a></td>
 											<td>Jobs</td>
-											<td>@steve</td>
 											<td></td>
 											<td></td>
-											<td></td>
+											<td>예약중</td>
 										</tr>
 										<tr>
 											<td>3</td>
 											<td>Simon</td>
+											<td><a>@steve</a></td>
 											<td>Philips</td>
-											<td>@simon</td>
 											<td></td>
 											<td></td>
-											<td></td>
+											<td>예약중</td>
 										</tr>
 										<tr>
 											<td>4</td>
 											<td>Jane</td>
+											<td><a>@steve</a></td>
 											<td>Doe</td>
-											<td>@jane</td>
 											<td></td>
 											<td></td>
-											<td></td>
+											<td>예약취소</td>
 										</tr>
 									</tbody>
 								</table>
@@ -206,7 +206,7 @@
 											<td>ssw1212</td>
 											<td>다운로드</td>
 											<td>불가</td>
-											<td>이용완료</td>
+											<td><button type="button" class="btn btn-default canceledbtn">예약취소</button></td>
 										</tr>
 										<tr>
 											<td>345</td>
@@ -217,7 +217,7 @@
 											<td>ssw1212</td>
 											<td>다운로드</td>
 											<td>불가</td>
-											<td>이용완료</td>
+											<td><button type="button" class="btn btn-default usedbtn">이용완료</button></td>
 										</tr>
 										<tr>
 											<td>345</td>
@@ -228,7 +228,7 @@
 											<td>ssw1212</td>
 											<td>다운로드</td>
 											<td>불가</td>
-											<td>게스트취소</td>
+											<td><button type="button" class="btn btn-default gestcancelbtn">게스트취소</button></td>
 										</tr>
 										<tr>
 											<td>345</td>
@@ -238,8 +238,8 @@
 											<td>2018-06-12~2018-06-13</td>
 											<td>ssw1212</td>
 											<td>다운로드</td>
-											<td><button type="button"  class="btn btn-default cancelbtn">취소</button></td>
-											<td>이용완료</td>
+											<td><button type="button" class="btn btn-default cancelbtn">취소</button></td>
+											<td><button type="button" class="btn btn-default bookingbtn">예약중</button></td>
 										</tr>
 										<tr>
 											<td>345</td>
@@ -250,7 +250,7 @@
 											<td>ssw1212</td>
 											<td>다운로드</td>
 											<td>완료</td>
-											<td>이용완료</td>
+											<td><button type="button" class="btn btn-default usedbtn">이용완료</button></td>
 										</tr>
 									</tbody>
 								</table>

@@ -44,16 +44,14 @@
 			<div class="container-fluid">
 				<!-- 문의 내용 -->
 				<div class="row">
-					<div class="col-md-5">
+					<div class="col-md-6">
 						<div class="panel panel-headline">
 							<div class="panel-heading">
 								<div class="row">
 									<div class="col-md-12">
 										<h3 class="panel-title">문의 내용</h3>
 										<div class="right">
-											<button type="button" class="btn-toggle-collapse">
-												<i class="lnr lnr-chevron-down"></i>
-											</button>
+											<p class="qstanswer">답변완료</p>
 										</div>
 									</div>
 								</div>
@@ -61,12 +59,31 @@
 							<div class="panel-body">
 								<div class="row">
 									<div class="col-md-12">
-										<div class="panel">
+										<div class="panel" style="border:1px solid lightgray;">
 											<div class="panel-heading">
-											head
+												<h4><span>[회원정보]</span>정보수정이안돼요.</h4>
+												<p>정보 수정이 안돼요. 프로필 사진 용량이 2MB 인 사진을 업로드하고 싶은데
+												용량제한으로 업로드가 안되네요... 작게 줄이자니 너무 깨질 것 같아요.
+												용량 좀 올려주시면 안될까요 ㅠㅠ</p>
 											</div>
 											<div class="panel-body">
-											body
+												<div class="row">
+													<div class="col-md-4">
+													    <span class="input-group-text" id="inputGroup-sizing-sm">관리자아이디 : </span>
+													</div>
+													<div class="col-md-8">
+													    <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+													</div>
+													<div class="col-md-12">
+														<textarea class="form-control" rows="5" style="resize:none;">안녕하세요.JAGOGA 고객센터 고객지원팀입니다. 항상 이용해주셔서 감사드리며, 고객님의 문의사항은 잘 접수되어 확인 중에 있습니다. 다음 업데이트에 적용할 수 있도록 최선을 다하겠습니다. 감사합니다.
+														</textarea>
+														<button type="button"  class="btn btn-default updatebtn" style="width:100%; height: 30px;">수정</button>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-12">
+												<p class="right">문의 아이디 : siwoo01</p>
+												<p class="left">첨부파일 : siwoo.jpg</p>
 											</div>
 										</div>
 									</div>
@@ -76,16 +93,18 @@
 					</div>
 					<!-- END 문의 내용 -->
 					<!-- 문의 목록 -->
-					<div class="col-md-7">
+					<div class="col-md-6">
 						<div class="panel panel-headline">
 							<div class="panel-heading">
 								<div class="row">
 									<div class="col-md-12">
 										<h3 class="panel-title">문의 목록</h3>
 										<div class="right">
-											<button type="button" class="btn-toggle-collapse">
-												<i class="lnr lnr-chevron-down"></i>
-											</button>
+											<span>답변완료 제외</span>
+											<label class="switch">
+											  <input type="checkbox">
+											  <span class="slider round"></span>
+											</label>
 										</div>
 									</div>
 								</div>
@@ -135,6 +154,38 @@
 											<td></td>
 											<td></td>
 										</tr>
+										<tr>
+											<td>5</td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+										</tr>
+										<tr>
+											<td>6</td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+										</tr>
+										<tr>
+											<td>7</td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+										</tr>
+										<tr>
+											<td>8</td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+										</tr>
 									</tbody>
 								</table>
 							</div>
@@ -148,93 +199,101 @@
 						<div class="row">
 							<div class="col-md-12">
 								<h3 class="panel-title">자주 묻는 문의 (FAQ)</h3>
-								<div class="right">
-									<button type="button" class="btn btn-default faqinsertbtn">등록</button>
-								</div>
 							</div>
 						</div>
 					</div>
 					<div class="panel-body">
-						<div class="tab">
-						  <button class="tablinks" onclick="openCity(event, 'use')" id="defaultOpen">이용문의</button>
-						  <button class="tablinks" onclick="openCity(event, 'booking')">예약문의</button>
-						  <button class="tablinks" onclick="openCity(event, 'verification')">검증문의</button>
-						  <button class="tablinks" onclick="openCity(event, 'pay')">결제문의</button>
-						  <button class="tablinks" onclick="openCity(event, 'member')">회원정보</button>
-						  <button class="tablinks" onclick="openCity(event, 'etc')">기타문의</button>
+						<div class="row">
+							<div class="col-md-12">
+								<div class="tab">
+								  <button class="tablinks" onclick="openCity(event, 'use')" id="defaultOpen">이용문의</button>
+								  <button class="tablinks" onclick="openCity(event, 'booking')">예약문의</button>
+								  <button class="tablinks" onclick="openCity(event, 'verification')">검증문의</button>
+								  <button class="tablinks" onclick="openCity(event, 'pay')">결제문의</button>
+								  <button class="tablinks" onclick="openCity(event, 'member')">회원정보</button>
+								  <button class="tablinks" onclick="openCity(event, 'etc')">기타문의</button>
+								</div>
+								
+								<div id="use" class="tabcontent">
+								  <h4><span>[이용문의]</span>
+								  	  호스트는 자격이 있어야 될 수 있나요?
+									  <button type="button"  class="btn btn-default updatebtn">수정</button>
+									  <button type="button"  class="btn btn-default deletebtn">삭제</button>
+								  </h4>
+								  <p>호스팅해보려는데 처음이라 잘 몰라서 문의합니다... 알려주세요!</p>
+								  <h4><span class="ans">[답변]</span>회원이라면 누구나 숙소를 등록하여 호스트가 될 수 있습니다. ..</h4>
+								  <br>
+								  <h4><span>[이용문의]</span>
+								  	  호스트는 자격이 있어야 될 수 있나요?-2
+									  <button type="button"  class="btn btn-default updatebtn">수정</button>
+									  <button type="button"  class="btn btn-default deletebtn">삭제</button>
+								  </h4>
+								  <p>호스팅해보려는데 처음이라 잘 몰라서 문의합니다... 알려주세요!-2</p>
+								  <h4><span class="ans">[답변]</span>회원이라면 누구나 숙소를 등록하여 호스트가 될 수 있습니다. ..</h4>
+								</div>
+								
+								<div id="booking" class="tabcontent">
+								  <h4><span>[예약문의]</span>
+								  	  호스트는 자격이 있어야 될 수 있나요?
+									  <button type="button"  class="btn btn-default updatebtn">수정</button>
+									  <button type="button"  class="btn btn-default deletebtn">삭제</button>
+								  </h4>
+								  <p>호스팅해보려는데 처음이라 잘 몰라서 문의합니다... 알려주세요!</p>
+								  <h4><span class="ans">[답변]</span>회원이라면 누구나 숙소를 등록하여 호스트가 될 수 있습니다. ..</h4>
+								  <br>
+								</div>
+								
+								<div id="verification" class="tabcontent">
+								  <h4><span>[검증문의]</span>
+								  	  호스트는 자격이 있어야 될 수 있나요?
+									  <button type="button"  class="btn btn-default updatebtn">수정</button>
+									  <button type="button"  class="btn btn-default deletebtn">삭제</button>
+								  </h4>
+								  <p>호스팅해보려는데 처음이라 잘 몰라서 문의합니다... 알려주세요!</p>
+								  <h4><span class="ans">[답변]</span>회원이라면 누구나 숙소를 등록하여 호스트가 될 수 있습니다. ..</h4>
+								  <br>
+								</div>
+								
+								<div id="pay" class="tabcontent">
+								  <h4><span>[결제문의]</span>
+								  	  호스트는 자격이 있어야 될 수 있나요?
+									  <button type="button"  class="btn btn-default updatebtn">수정</button>
+									  <button type="button"  class="btn btn-default deletebtn">삭제</button>
+								  </h4>
+								  <p>호스팅해보려는데 처음이라 잘 몰라서 문의합니다... 알려주세요!</p>
+								  <h4><span class="ans">[답변]</span>회원이라면 누구나 숙소를 등록하여 호스트가 될 수 있습니다. ..</h4>
+								  <br>
+								</div>
+								
+								<div id="member" class="tabcontent">
+								  <h4><span>[회원정보]</span>
+								  	  호스트는 자격이 있어야 될 수 있나요?
+									  <button type="button"  class="btn btn-default updatebtn">수정</button>
+									  <button type="button"  class="btn btn-default deletebtn">삭제</button>
+								  </h4>
+								  <p>호스팅해보려는데 처음이라 잘 몰라서 문의합니다... 알려주세요!</p>
+								  <h4><span class="ans">[답변]</span>회원이라면 누구나 숙소를 등록하여 호스트가 될 수 있습니다. ..</h4>
+								  <br>
+								</div>
+								
+								<div id="etc" class="tabcontent">
+								  <h4><span>[기타문의]</span>
+								  	  호스트는 자격이 있어야 될 수 있나요?
+									  <button type="button"  class="btn btn-default updatebtn">수정</button>
+									  <button type="button"  class="btn btn-default deletebtn">삭제</button>
+								  </h4>
+								  <p>호스팅해보려는데 처음이라 잘 몰라서 문의합니다... 알려주세요!</p>
+								  <h4><span class="ans">[답변]</span>회원이라면 누구나 숙소를 등록하여 호스트가 될 수 있습니다. ..</h4>
+								  <br>
+								</div>
+							</div>
 						</div>
-						
-						<div id="use" class="tabcontent">
-						  <h4><span>[이용문의]</span>
-						  	  호스트는 자격이 있어야 될 수 있나요?
-							  <button type="button"  class="btn btn-default updatebtn">수정</button>
-							  <button type="button"  class="btn btn-default deletebtn">삭제</button>
-						  </h4>
-						  <p>호스팅해보려는데 처음이라 잘 몰라서 문의합니다... 알려주세요!</p>
-						  <h4><span class="ans">[답변]</span>회원이라면 누구나 숙소를 등록하여 호스트가 될 수 있습니다. ..</h4>
-						  <br>
-						  <h4><span>[이용문의]</span>
-						  	  호스트는 자격이 있어야 될 수 있나요?-2
-							  <button type="button"  class="btn btn-default updatebtn">수정</button>
-							  <button type="button"  class="btn btn-default deletebtn">삭제</button>
-						  </h4>
-						  <p>호스팅해보려는데 처음이라 잘 몰라서 문의합니다... 알려주세요!-2</p>
-						  <h4><span class="ans">[답변]</span>회원이라면 누구나 숙소를 등록하여 호스트가 될 수 있습니다. ..</h4>
-						</div>
-						
-						<div id="booking" class="tabcontent">
-						  <h4><span>[예약문의]</span>
-						  	  호스트는 자격이 있어야 될 수 있나요?
-							  <button type="button"  class="btn btn-default updatebtn">수정</button>
-							  <button type="button"  class="btn btn-default deletebtn">삭제</button>
-						  </h4>
-						  <p>호스팅해보려는데 처음이라 잘 몰라서 문의합니다... 알려주세요!</p>
-						  <h4><span class="ans">[답변]</span>회원이라면 누구나 숙소를 등록하여 호스트가 될 수 있습니다. ..</h4>
-						  <br>
-						</div>
-						
-						<div id="verification" class="tabcontent">
-						  <h4><span>[검증문의]</span>
-						  	  호스트는 자격이 있어야 될 수 있나요?
-							  <button type="button"  class="btn btn-default updatebtn">수정</button>
-							  <button type="button"  class="btn btn-default deletebtn">삭제</button>
-						  </h4>
-						  <p>호스팅해보려는데 처음이라 잘 몰라서 문의합니다... 알려주세요!</p>
-						  <h4><span class="ans">[답변]</span>회원이라면 누구나 숙소를 등록하여 호스트가 될 수 있습니다. ..</h4>
-						  <br>
-						</div>
-						
-						<div id="pay" class="tabcontent">
-						  <h4><span>[결제문의]</span>
-						  	  호스트는 자격이 있어야 될 수 있나요?
-							  <button type="button"  class="btn btn-default updatebtn">수정</button>
-							  <button type="button"  class="btn btn-default deletebtn">삭제</button>
-						  </h4>
-						  <p>호스팅해보려는데 처음이라 잘 몰라서 문의합니다... 알려주세요!</p>
-						  <h4><span class="ans">[답변]</span>회원이라면 누구나 숙소를 등록하여 호스트가 될 수 있습니다. ..</h4>
-						  <br>
-						</div>
-						
-						<div id="member" class="tabcontent">
-						  <h4><span>[회원정보]</span>
-						  	  호스트는 자격이 있어야 될 수 있나요?
-							  <button type="button"  class="btn btn-default updatebtn">수정</button>
-							  <button type="button"  class="btn btn-default deletebtn">삭제</button>
-						  </h4>
-						  <p>호스팅해보려는데 처음이라 잘 몰라서 문의합니다... 알려주세요!</p>
-						  <h4><span class="ans">[답변]</span>회원이라면 누구나 숙소를 등록하여 호스트가 될 수 있습니다. ..</h4>
-						  <br>
-						</div>
-						
-						<div id="etc" class="tabcontent">
-						  <h4><span>[기타문의]</span>
-						  	  호스트는 자격이 있어야 될 수 있나요?
-							  <button type="button"  class="btn btn-default updatebtn">수정</button>
-							  <button type="button"  class="btn btn-default deletebtn">삭제</button>
-						  </h4>
-						  <p>호스팅해보려는데 처음이라 잘 몰라서 문의합니다... 알려주세요!</p>
-						  <h4><span class="ans">[답변]</span>회원이라면 누구나 숙소를 등록하여 호스트가 될 수 있습니다. ..</h4>
-						  <br>
+						<div class="row">
+							<div class="col-md-12">
+								<div class="right">
+									<button type="button" class="btn btn-default insertbtn">등록</button>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -260,7 +319,7 @@
 									<div class="col-md-12">
 										  <form>
 										    <div class="form-group">
-										      <textarea class="form-control" rows="15" id="comment" disabled="disabled" style="resize:none;">JAGOGA 개인정보취급방침
+										      <textarea class="form-control" rows="15" disabled="disabled" style="resize:none;">JAGOGA 개인정보취급방침
 JAGOGA  온라인 숙박공유 플랫폼 개인정보취급방침
 (발효일: 2012년 5월)
 
