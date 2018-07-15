@@ -4,6 +4,7 @@
 a.mainbar { color: #FFFFFF; text-decoration: none; font-weight: bold; }
 a.mainbar:hover { color: #FFFFFF; text-decoration: none; cursor: pointer; }
 
+
 /* 내비게이션 */
 div.navbar .navbar-default { margin-bottom: 0px; }
 .navbar-default
@@ -34,7 +35,7 @@ div.navbar .navbar-default { margin-bottom: 0px; }
 	color: #FFFFFF;
 	font-weight: bold;
 }
-.container {background-color: rgb(0, 135, 163); }
+.container { }
 
 
 /* 왼쪽 카테고리 탭 */
@@ -42,6 +43,7 @@ div.navbar .navbar-default { margin-bottom: 0px; }
 {
 	background-color: white;
 }
+.sidebar .nav > li > a:hover,
 .sidebar .nav > li > a:focus,
  .sidebar .nav > li > a.active
 {
@@ -105,3 +107,107 @@ div.navbar .navbar-default { margin-bottom: 0px; }
 }
 .btn-primary:hover, .btn-primary:focus 
 { background-color: #389a76102199163; }
+
+/* 고객센터 */
+/* Style the tab */
+.tab {
+    float: left;
+    border: 1px solid #ccc;
+    background-color: #c5c5c5;
+    text-align: center;
+    width: 10%;
+    height: 300px;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+    display: block;
+    background-color: inherit;
+    color: black;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+    background-color: #f3f3f3;
+}
+
+/* Create an active/current "tab button" class */
+.tab button.active {
+    background-color: #f3f3f3;
+}
+
+/* Style the tab content */
+.tabcontent {
+    float: left;
+    padding: 0px 12px;
+    border: 1px solid #ccc;
+    width: 90%;
+    border-left: none;
+    background-color: #f3f3f3;
+    height: 350px;
+}
+.tabcontent>h4>span
+{
+	margin-right: 3px;
+	color: rgb(102, 199, 163);
+}
+.tabcontent>h4>span.ans
+{
+	margin-right: 3px;
+	color: red;
+}
+
+
+/* 전체 버튼 css */
+.updatebtn, .deletebtn
+{
+	background-color: rgb(102, 199, 163);
+	color: white;
+	width: 55px;
+	height: 22px;
+	padding: 0px;
+	margin-left: 3px;
+	border: 0px;
+	border-radius: 5px;
+	text-align: center;
+}
+.insertbtn
+{
+	background-color: rgb(102, 199, 163);
+	color: white;
+	width: 100px;
+	height: 28px;
+	padding: 0px;
+	border: 0px;
+	border-radius: 5px;
+	text-align: center;
+}
+.faqinsertbtn
+{
+	background-color: rgb(102, 199, 163);
+	width: 100px;
+	height: 28px;
+	padding: 0px;
+	border: 0px;
+	border-radius: 5px;
+	text-align: center;
+}
+.cancelbtn
+{
+	background-color: red;
+	color: white;
+	width: 55px;
+	height: 22px;
+	padding: 0px;
+	border: 0px;
+	margin-left: 3px;
+	border-radius: 5px;
+	text-align: center;
+}

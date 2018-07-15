@@ -5,7 +5,7 @@
 	String cp = request.getContextPath();	
 %>
 <div class="navbar navbar-default" style="background-color: rgb(0, 135, 163);">
-	<div class="container" style="width:100%; height: 24px;">
+	<div class="container" style="width:100%; height: 24px; background-color: rgb(0, 135, 163);">
 		<div class="navbar-header">
 			<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown">

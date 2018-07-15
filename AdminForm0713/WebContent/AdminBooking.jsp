@@ -238,7 +238,7 @@
 											<td>2018-06-12~2018-06-13</td>
 											<td>ssw1212</td>
 											<td>다운로드</td>
-											<td><button type="button"  class="btn btn-default updatebtn">취소</button></td>
+											<td><button type="button"  class="btn btn-default cancelbtn">취소</button></td>
 											<td>이용완료</td>
 										</tr>
 										<tr>

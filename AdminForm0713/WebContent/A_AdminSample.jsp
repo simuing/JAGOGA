@@ -30,32 +30,7 @@
 	<!-- ICONS -->
 	<link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
 	<link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
-	
-<script>
-	// 현재 시간을 출력해주는 함수
-	function printTime()
-	{
-		// 출력할 장소 선택
-		var clock = document.getElementById("clock");
-		
-		// 현재시간
-		var now = new Date();
-		var nowTime = now.getFullYear() + "년" + (now.getMonth()+1) + "월" + now.getDate()
-				+ "일" + now.getHours() + "시" + now.getMinutes() + "분" + now.getSeconds() + "초";
-		
-		// 현재시간을 출력
-		clock.innerHTML = nowTime;           
-		
-		// setTimeout(“실행할함수”,시간) 시간은1초의 경우 1000
-		setTimeout("printTime()",1000);         
-	}
-	
-	window.onload = function()
-	{
-		// 페이지가 로딩되면 현재시간 출력함수 실행
-		printTime();
-	}
-</script>
+	<script type="text/javascript" src="assets/scripts/admin.js"></script>
 </head>
 <body>
 <!-- WRAPPER -->
@@ -68,7 +43,6 @@
 	<div class="main">
 		<div class="main-content">
 			<div class="container-fluid">
-			
 			
 				<!-- 기본 백지 12 -->
 				<div class="panel panel-headline">
