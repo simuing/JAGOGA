@@ -81,41 +81,39 @@
 									</div>
 								</div>
 							</div>
-							<div class="container" style="background-color:white; padding-left:0px; padding-bottom:2rem;">
-							    <div class="row">    
-							        <div class="col-md-8">
-									    <div class="input-group">
-							                <div class="input-group-btn search-panel">
-							                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-							                    	<span id="search_concept">전체</span> <span class="caret"></span>
-							                    </button>
-							                    <ul class="dropdown-menu" role="menu">
-							                      <li><a href="#bookingCode">결제코드</a></li>
-							                      <li><a href="#roomCode">숙소코드</a></li>
-							                      <li><a href="#hmemId">호스트아이디</a></li>
-							                      <li><a href="#gmemId">게스트아이디</a></li>
-							                    </ul>
-							                </div>
-							                <div class="input-group-btn search-panel">
-							                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-							                    	<span id="search_concept">거래상태</span> <span class="caret"></span>
-							                    </button>
-							                    <ul class="dropdown-menu" role="menu">
-							                      <li><a href="#booking">예약중</a></li>
-							                      <li><a href="#used">거래완료</a></li>
-							                      <li><a href="#cancel">예약취소</a></li>
-							                    </ul>
-							                </div>
-							                <input type="hidden" name="search_param" value="all" id="search_param">         
-							                <input type="text" class="form-control" name="x" placeholder="Search...">
-							                <span class="input-group-btn">
-							                    <button class="btn btn-default" type="button">
-							                    	<span class="glyphicon glyphicon-search"></span>
-							                    </button>
-							                </span>
-							            </div>
-							        </div>
-								</div>
+						    <div class="row"> 
+						        <div class="col-md-8">
+								    <div class="input-group">
+						                <div class="input-group-btn search-panel">
+						                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+						                    	<span id="search_concept">전체</span> <span class="caret"></span>
+						                    </button>
+						                    <ul class="dropdown-menu" role="menu">
+						                      <li><a href="#bookingCode">결제코드</a></li>
+						                      <li><a href="#roomCode">숙소코드</a></li>
+						                      <li><a href="#hmemId">호스트아이디</a></li>
+						                      <li><a href="#gmemId">게스트아이디</a></li>
+						                    </ul>
+						                </div>
+						                <div class="input-group-btn search-panel">
+						                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+						                    	<span id="search_concept">거래상태</span> <span class="caret"></span>
+						                    </button>
+						                    <ul class="dropdown-menu" role="menu">
+						                      <li><a href="#booking">예약중</a></li>
+						                      <li><a href="#used">거래완료</a></li>
+						                      <li><a href="#cancel">예약취소</a></li>
+						                    </ul>
+						                </div>
+						                <input type="hidden" name="search_param" value="all" id="search_param">         
+						                <input type="text" class="form-control" name="x" placeholder="Search...">
+						                <span class="input-group-btn">
+						                    <button class="btn btn-default" type="button">
+						                    	<span class="glyphicon glyphicon-search"></span>
+						                    </button>
+						                </span>
+						            </div>
+						        </div>
 							</div>
 							<div class="panel-body">
 								<table class="table">

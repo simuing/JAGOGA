@@ -58,30 +58,28 @@
 						</div>
 					</div>
 					<div class="panel-body">
-						<div class="container" style="background-color:white; padding-left:0px; padding-bottom:2rem;">
-						    <div class="row">    
-						        <div class="col-md-8">
-								    <div class="input-group">
-						                <div class="input-group-btn search-panel">
-						                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-						                    	<span id="search_concept">전체회원</span> <span class="caret"></span>
-						                    </button>
-						                    <ul class="dropdown-menu" role="menu">
-						                      <li><a href="#memCode">회원코드</a></li>
-						                      <li><a href="#memId">아이디</a></li>
-						                      <li><a href="#memTel">휴대폰번호</a></li>
-						                    </ul>
-						                </div>
-						                <input type="hidden" name="search_param" value="all" id="search_param">         
-						                <input type="text" class="form-control" name="x" placeholder="Search...">
-						                <span class="input-group-btn">
-						                    <button class="btn btn-default" type="button">
-						                    	<span class="glyphicon glyphicon-search"></span>
-						                    </button>
-						                </span>
-						            </div>
-						        </div>
-							</div>
+					    <div class="row">    
+					        <div class="col-md-8">
+							    <div class="input-group">
+					                <div class="input-group-btn search-panel">
+					                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+					                    	<span id="search_concept">전체회원</span> <span class="caret"></span>
+					                    </button>
+					                    <ul class="dropdown-menu" role="menu">
+					                      <li><a href="#memCode">회원코드</a></li>
+					                      <li><a href="#memId">아이디</a></li>
+					                      <li><a href="#memTel">휴대폰번호</a></li>
+					                    </ul>
+					                </div>
+					                <input type="hidden" name="search_param" value="all" id="search_param">         
+					                <input type="text" class="form-control" name="x" placeholder="Search...">
+					                <span class="input-group-btn">
+					                    <button class="btn btn-default" type="button">
+					                    	<span class="glyphicon glyphicon-search"></span>
+					                    </button>
+					                </span>
+					            </div>
+					        </div>
 						</div>
 						<table class="table">
 							<thead>
