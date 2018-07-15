@@ -69,8 +69,7 @@
 		<div class="main-content">
 			<div class="container-fluid">
 			
-			
-				<!-- 기본 백지 -->
+				<!-- 공지목록 -->
 				<div class="panel panel-headline">
 					<div class="panel-heading">
 						<div class="row">
@@ -85,14 +84,150 @@
 						</div>
 					</div>
 					<div class="panel-body">
-						<div class="row">
-							<div class="col-md-12">
+						<div class="row">    
+					        <div class="col-md-8">
+							    <div class="input-group">
+					                <div class="input-group-btn search-panel">
+					                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+					                    	<span id="search_concept">전체공지</span> <span class="caret"></span>
+					                    </button>
+					                    <ul class="dropdown-menu" role="menu">
+					                      <li><a href="#noticeTitle">공지제목</a></li>
+					                      <li><a href="#adminId">작성자아이디</a></li>
+					                    </ul>
+					                </div>
+					                <input type="hidden" name="search_param" value="all" id="search_param">         
+					                <input type="text" class="form-control" name="x" placeholder="Search...">
+					                <span class="input-group-btn">
+					                    <button class="btn btn-default" type="button">
+					                    	<span class="glyphicon glyphicon-search"></span>
+					                    </button>
+					                </span>
+					            </div>
+					        </div>
+						</div>
+						<table class="table">
+							<thead>
+								<tr>
+									<th>공지코드</th>
+									<th>공지제목</th>
+									<th>등록일</th>
+									<th>첨부파일</th>
+									<th>조회수</th>
+									<th>비공개상태</th>
+									<th>상태변경</th>
+									<th>관리자아이디</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>11</td>
+									<td>JAGOGA 이벤트 관련 알림</td>
+									<td>2018-07-11</td>
+									<td>file.zip</td>
+									<td>3550</td>
+									<td>공개</td>
+									<td>
+										<button type="button" class="btn btn-default updatebtn">수정</button>
+										<button type="button" class="btn btn-default deletebtn">삭제</button>
+									</td>
+									<td>helper</td>
+								</tr>
+								<tr>
+									<td>11</td>
+									<td>JAGOGA 이벤트 관련 알림</td>
+									<td>2018-07-11</td>
+									<td>file.zip</td>
+									<td>3550</td>
+									<td>공개</td>
+									<td>
+										<button type="button" class="btn btn-default updatebtn">수정</button>
+										<button type="button" class="btn btn-default deletebtn">삭제</button>
+									</td>
+									<td>helper</td>
+								</tr>
+								<tr>
+									<td>11</td>
+									<td>JAGOGA 이벤트 관련 알림</td>
+									<td>2018-07-11</td>
+									<td>file.zip</td>
+									<td>3550</td>
+									<td>공개</td>
+									<td>
+										<button type="button" class="btn btn-default updatebtn">수정</button>
+										<button type="button" class="btn btn-default deletebtn">삭제</button>
+									</td>
+									<td>helper</td>
+								</tr>
+								<tr>
+									<td>11</td>
+									<td>JAGOGA 이벤트 관련 알림</td>
+									<td>2018-07-11</td>
+									<td>file.zip</td>
+									<td>3550</td>
+									<td>공개</td>
+									<td>
+										<button type="button" class="btn btn-default updatebtn">수정</button>
+										<button type="button" class="btn btn-default deletebtn">삭제</button>
+									</td>
+									<td>helper</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="col-md-12">
+							<div class="left">
+								<button type="button" class="btn btn-default insertbtn">등록</button>
 							</div>
 						</div>
 					</div>
 				</div>
-				<!-- END 기본 백지 -->
+				<!-- END 공지목록 -->
+				<!-- 공지등록 -->
+				<div>
 				
+				</div>
+				<!-- END 공지등록 -->
+				
+				
+				<!-- 이용가이드 -->
+				<div class="panel panel-headline">
+					<div class="panel-heading">
+						<div class="row">
+							<div class="col-md-12">
+								<h3 class="panel-title">이용가이드</h3>
+								<div class="right">
+									<button type="button" class="btn-toggle-collapse">
+										<i class="lnr lnr-chevron-down"></i>
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="form-group col-md-6">
+									1<input type="text" class="form-control" value="1. 안전을 바탕으로 한 커뮤니티"><br>
+									<input type="text" class="form-control" value="안전을 최우선으로"><br>
+									2<input type="text" class="form-control" value="2. 신뢰할 수 있는 서비스"><br>
+									<input type="text" class="form-control" value="신뢰를 최우선으로"><br>
+									3<input type="text" class="form-control" value="3. 검증된 서비스"><br>
+									<input type="text" class="form-control" value="검증을 통한 안전성 확보"><br>
+								</div>
+								<div class="form-group col-md-6">
+									4<input type="text" class="form-control" value="4. 다양한 숙소"><br>
+									<input type="text" class="form-control" value="다양한 숙소"><br>
+									5<input type="text" class="form-control" value=""><br>
+									<input type="text" class="form-control" value=""><br>
+									6<input type="text" class="form-control" value=""><br>
+									<input type="text" class="form-control" value=""><br>
+								</div>
+								<button type="button"  class="btn btn-default updatebtn" style="width:100%; height: 30px;">수정</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- END 이용가이드 -->
 			</div>
 		</div>
 	</div>

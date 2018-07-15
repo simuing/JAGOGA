@@ -36,16 +36,15 @@
 	<div class="sidebar-scroll">
 		<nav>
 			<ul class="nav">
-<!-- 				<li><a href="index.jsp" class="active"><i class="lnr lnr-home"></i> <span>대시보드</span></a></li> -->
 				<li><a href="AdminDashboard.jsp" class=""><i class="lnr lnr-home"></i> <span>대시보드</span></a></li>
 				<li><a href="AdminList.jsp" class=""><i class="lnr lnr-cog"></i> <span>관리자계정관리</span></a></li>
-				<li><a href="AdminMember.jsp" class=""><i class="lnr lnr-text-format"></i> <span>회원관리</span></a></li>
+				<li><a href="AdminMember.jsp" class=""><i class="lnr lnr-user"></i> <span>회원관리</span></a></li>
 				<li><a href="AdminBooking.jsp" class=""><i class="lnr lnr-code"></i> <span>결제관리</span></a></li>
 				<li><a href="AdminQuestion.jsp" class=""><i class="lnr lnr-file-empty"></i> <span>고객센터관리</span></a></li>
 				<li><a href="AdminNotice.jsp" class=""><i class="lnr lnr-alarm"></i> <span>공지관리</span></a></li>
-				<li><a href="AdminRoom.jsp" class=""><i class="lnr lnr-dice"></i> <span>숙소관리</span></a></li>
+				<li><a href="AdminRoom.jsp" class=""><i class="lnr lnr-home"></i> <span>숙소관리</span></a></li>
 				<li><a href="AdminVerfication.jsp" class=""><i class="lnr lnr-linearicons"></i> <span>검증관리</span></a></li>
-				<li><a href="AdminInsurance.jsp" class=""><i class="lnr lnr-file-empty"></i> <span>보험관리</span></a></li>
+				<li><a href="AdminInsurance.jsp" class=""><i class="lnr lnr-bookmark"></i> <span>보험관리</span></a></li>
 				<li><a href="AdminStatistics.jsp" class=""><i class="lnr lnr-chart-bars"></i> <span>통계관리</span></a></li>
 			</ul>
 		</nav>

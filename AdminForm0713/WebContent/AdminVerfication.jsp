@@ -13,7 +13,7 @@
 <html lang="en">
 
 <head>
-	<title>Admin sample</title>
+	<title>Admin Verification</title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -70,12 +70,12 @@
 			<div class="container-fluid">
 			
 			
-				<!-- 기본 백지 -->
+				<!-- 숙소목록 -->
 				<div class="panel panel-headline">
 					<div class="panel-heading">
 						<div class="row">
 							<div class="col-md-12">
-								<h3 class="panel-title">에티켓 등급별 회원수 통계</h3>
+								<h3 class="panel-title">검증 목록</h3>
 								<div class="right">
 									<button type="button" class="btn-toggle-collapse">
 										<i class="lnr lnr-chevron-down"></i>
@@ -85,13 +85,120 @@
 						</div>
 					</div>
 					<div class="panel-body">
-						<div class="row">
-							<div class="col-md-12">
-							</div>
+						<div class="row">    
+					        <div class="col-md-8">
+							    <div class="input-group">
+					                <div class="input-group-btn search-panel">
+					                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+					                    	<span id="search_v">전체검증</span> <span class="caret"></span>
+					                    </button>
+					                    <ul class="dropdown-menu" role="menu">
+					                      <li><a href="#vcode">검증코드</a></li>
+					                      <li><a href="#rcode">숙소코드</a></li>
+					                      <li><a href="#hmemId">호스트아이디</a></li>
+					                      <li><a href="#adminId">관리자아이디</a></li>
+					                    </ul>
+					                </div>
+					                 <div class="input-group-btn search-panel">
+					                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+					                    	<span id="search_vgrade">검증등급</span> <span class="caret"></span>
+					                    </button>
+					                    <ul class="dropdown-menu" role="menu">
+					                      <li><a href="#a">A 등급</a></li>
+					                      <li><a href="#b">B 등급</a></li>
+					                      <li><a href="#c">C 등급</a></li>
+					                    </ul>
+					                </div>
+					                <div class="input-group-btn search-panel">
+					                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+					                    	<span id="search_vstate">검증상태</span> <span class="caret"></span>
+					                    </button>
+					                    <ul class="dropdown-menu" role="menu">
+					                      <li><a href="#vwaiting">검증대기</a></li>
+					                      <li><a href="#verifying">검증중</a></li>
+					                      <li><a href="#vsuccess">검증완료</a></li>
+					                      <li><a href="#vfail">검증실패</a></li>
+					                    </ul>
+					                </div>
+					                <input type="hidden" name="search_param" value="all" id="search_param">         
+					                <input type="text" class="form-control" name="x" placeholder="Search...">
+					                <span class="input-group-btn">
+					                    <button class="btn btn-default" type="button">
+					                    	<span class="glyphicon glyphicon-search"></span>
+					                    </button>
+					                </span>
+					            </div>
+					        </div>
 						</div>
+						<table class="table">
+							<thead>
+								<tr>
+									<th>검증코드</th>
+									<th>숙소코드</th>
+									<th>검증단계</th>
+									<th>검증유효기간</th>
+									<th>숙소유형</th>
+									<th>호스트아이디</th>
+									<th>숙소이름</th>
+									<th>등록일</th>
+									<th>상태</th>
+									<th>관리자아이디</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>33</td>
+									<td>22</td>
+									<td>A</td>
+									<td>~2019-05-05</td>
+									<td>주택</td>
+									<td>wd098</td>
+									<td>행복했던 나의 집1</td>
+									<td>2018-07-05</td>
+									<td><button type="button" class="btn btn-default updatebtn">검증중</button></td>
+									<td>helper</td>
+								</tr>
+								<tr>
+									<td>32</td>
+									<td>22</td>
+									<td>B</td>
+									<td>~2019-05-05</td>
+									<td>주택</td>
+									<td>wd098</td>
+									<td>행복했던 나의 집1</td>
+									<td>2018-07-05</td>
+									<td><button type="button" class="btn btn-default updatebtn">검증완료</button></td>
+									<td>helper</td>
+								</tr>
+								<tr>
+									<td>31</td>
+									<td>22</td>
+									<td>C</td>
+									<td>~2019-05-05</td>
+									<td>주택</td>
+									<td>wd098</td>
+									<td>행복했던 나의 집1</td>
+									<td>2018-07-05</td>
+									<td><button type="button" class="btn btn-default updatebtn">검증대기</button></td>
+									<td>helper</td>
+								</tr>
+								<tr>
+									<td>30</td>
+									<td>22</td>
+									<td>A</td>
+									<td>~2019-05-05</td>
+									<td>주택</td>
+									<td>wd098</td>
+									<td>행복했던 나의 집1</td>
+									<td>2018-07-05</td>
+									<td><button type="button" class="btn btn-default updatebtn">검증대기</button></td>
+									<td>helper</td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
 				</div>
-				<!-- END 기본 백지 -->
+				<!-- END 숙소목록 -->
 				
 			</div>
 		</div>

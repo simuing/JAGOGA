@@ -70,12 +70,12 @@
 			<div class="container-fluid">
 			
 			
-				<!-- 기본 백지 -->
+				<!-- 숙소목록 -->
 				<div class="panel panel-headline">
 					<div class="panel-heading">
 						<div class="row">
 							<div class="col-md-12">
-								<h3 class="panel-title">에티켓 등급별 회원수 통계</h3>
+								<h3 class="panel-title">숙소 목록</h3>
 								<div class="right">
 									<button type="button" class="btn-toggle-collapse">
 										<i class="lnr lnr-chevron-down"></i>
@@ -85,13 +85,108 @@
 						</div>
 					</div>
 					<div class="panel-body">
-						<div class="row">
-							<div class="col-md-12">
-							</div>
+						<div class="row">    
+					        <div class="col-md-8">
+							    <div class="input-group">
+					                <div class="input-group-btn search-panel">
+					                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+					                    	<span id="search_concept">전체숙소</span> <span class="caret"></span>
+					                    </button>
+					                    <ul class="dropdown-menu" role="menu">
+					                      <li><a href="#noticeTitle">숙소코드</a></li>
+					                      <li><a href="#adminId">숙소이름</a></li>
+					                      <li><a href="#adminId">호스트아이디</a></li>
+					                    </ul>
+					                </div>
+					                 <div class="input-group-btn search-panel">
+					                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+					                    	<span id="search_concept">전체등급</span> <span class="caret"></span>
+					                    </button>
+					                    <ul class="dropdown-menu" role="menu">
+					                      <li><a href="#noticeTitle">A 등급</a></li>
+					                      <li><a href="#adminId">B 등급</a></li>
+					                      <li><a href="#adminId">C 등급</a></li>
+					                    </ul>
+					                </div>
+					                <input type="hidden" name="search_param" value="all" id="search_param">         
+					                <input type="text" class="form-control" name="x" placeholder="Search...">
+					                <span class="input-group-btn">
+					                    <button class="btn btn-default" type="button">
+					                    	<span class="glyphicon glyphicon-search"></span>
+					                    </button>
+					                </span>
+					            </div>
+					        </div>
 						</div>
+						<table class="table">
+							<thead>
+								<tr>
+									<th>숙소코드</th>
+									<th>검증등급</th>
+									<th>검증유효기간</th>
+									<th>숙소유형</th>
+									<th>호스트아이디</th>
+									<th>숙소이름</th>
+									<th>등록일</th>
+									<th>조회</th>
+									<th>공개상태</th>
+									<th>관리자아이디</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>22</td>
+									<td>A</td>
+									<td>~2019-05-05</td>
+									<td>주택</td>
+									<td>wd098</td>
+									<td>행복한 나의 집1</td>
+									<td>2018-05-05</td>
+									<td><button type="button" class="btn btn-default updatebtn">조회</button></td>
+									<td><button type="button" class="btn btn-default unhidebtn">공개</button></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>21</td>
+									<td>B</td>
+									<td>~2019-05-05</td>
+									<td>주택</td>
+									<td>wd098</td>
+									<td>행복한 나의 집2</td>
+									<td>2018-05-05</td>
+									<td><button type="button" class="btn btn-default updatebtn">조회</button></td>
+									<td><button type="button" class="btn btn-default unhidebtn">공개</button></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>20</td>
+									<td>A</td>
+									<td>~2019-05-05</td>
+									<td>주택</td>
+									<td>wd098</td>
+									<td>행복한 나의 집3</td>
+									<td>2018-05-05</td>
+									<td><button type="button" class="btn btn-default updatebtn">조회</button></td>
+									<td><button type="button" class="btn btn-default unhidebtn">공개</button></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>19</td>
+									<td>C</td>
+									<td>~2019-05-05</td>
+									<td>주택</td>
+									<td>wd098</td>
+									<td>행복한 나의 집4</td>
+									<td>2018-05-05</td>
+									<td><button type="button" class="btn btn-default updatebtn">조회</button></td>
+									<td><button type="button" class="btn btn-default hidebtn">비공개</button></td>
+									<td>helper</td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
 				</div>
-				<!-- END 기본 백지 -->
+				<!-- END 숙소목록 -->
 				
 			</div>
 		</div>

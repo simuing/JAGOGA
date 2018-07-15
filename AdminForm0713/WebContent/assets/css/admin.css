@@ -166,7 +166,7 @@ div.navbar .navbar-default { margin-bottom: 0px; }
 
 
 /* 전체 버튼 css */
-.updatebtn, .deletebtn
+.updatebtn, .deletebtn, .unhidebtn
 {
 	background-color: rgb(102, 199, 163);
 	color: white;
@@ -190,7 +190,7 @@ div.navbar .navbar-default { margin-bottom: 0px; }
 	border-radius: 5px;
 	text-align: center;
 }
-.cancelbtn
+.cancelbtn, .hidebtn
 {
 	background-color: red;
 	color: white;

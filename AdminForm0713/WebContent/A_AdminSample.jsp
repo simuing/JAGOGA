@@ -66,7 +66,7 @@
 					</div>
 				</div>
 				<!-- END 기본 백지 -->
-				<!-- 기본 백지 12 -->
+				<!-- 기본 백지 6 -->
 				<div class="row">
 					<div class="col-md-6">
 						<div class="panel panel-headline">
@@ -90,7 +90,6 @@
 							</div>
 						</div>
 					</div>
-					<!-- END 기본 백지 -->
 					<div class="col-md-6">
 						<div class="panel panel-headline">
 							<div class="panel-heading">
@@ -113,7 +112,7 @@
 							</div>
 						</div>
 					</div>
-					<!-- END 기본 백지 -->
+					<!-- END 기본 백지 6 -->
 				</div>
 				
 			</div>
