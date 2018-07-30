@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<classpath>
-	<classpathentry kind="src" path=""/>
-	<classpathentry kind="lib" path="C:/Downloads/007_JDBC/ojdbc6.jar"/>
-	<classpathentry kind="lib" path="C:/Downloads/009_JSTL/jakarta-taglibs-standard-1.1.2/jakarta-taglibs-standard-1.1.2/lib/jstl.jar"/>
-	<classpathentry kind="lib" path="C:/Downloads/009_JSTL/jakarta-taglibs-standard-1.1.2/jakarta-taglibs-standard-1.1.2/lib/standard.jar"/>
-	<classpathentry kind="output" path="bin"/>
-</classpath>
