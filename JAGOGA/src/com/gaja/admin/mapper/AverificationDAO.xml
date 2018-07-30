@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gaja.admin.IAVerificationDAO">
+
+	<!-- 검증관리조회 -->
+	<select id="aVerificationList" resultType="com.gaja.dto.VverificationDTO">
+	<![CDATA[
+		SELECT A.*
+			 , COUNT(*) OVER() AS ROWCNT
+		FROM
+		(
+			SELECT T.*
+				 , ROWNUM AS RNUM
+			FROM
+			(
+				SELECT REQVCODE, RCODE, RNAME, EFFECTIVEDATE, DECODE(VAFTERGRADE, 'C', 'B', 'A') AS VAFTERGRADE
+				     , RTYPE, MEMID,RREGDATE, VSCONTENT, ADMINID, VCODE 
+				FROM VIEW_VRLIST 
+				ORDER BY REQVDATE DESC
+			)T
+		)A
+		WHERE RNUM > (-10+(#{pageNumber}*10)) AND RNUM <= (#{pageNumber}*10)
+	]]>
+	</select>
+	
+	<!-- 검증사유 조회 -->
+	<select id="verificationCause" resultType="java.lang.String">
+		SELECT VCAUSE 
+		FROM TBL_VERIFICATIONRESULT 
+		WHERE VCODE=#{vcode}
+	</select>
+	
+	
+	<!-- 검증시작 업데이트 -->
+	<insert id="startVerification">
+		INSERT INTO TBL_VERIFICATION (VCODE, REQVCODE, ADMINCODE) 
+		VALUES(SEQVERIFICATION.NEXTVAL, #{reqvCode}, #{adminCode})
+	</insert>
+
+
+	<!-- 검증완료 업데이트 -->
+	<insert id="endVerification">
+		INSERT INTO TBL_VERIFICATIONRESULT(VRCODE, VSCODE, VCODE, VAFTERGRADE, PROCESSINGDATE, VCAUSE)
+		VALUES(SEQVERIFICATIONRESULT.NEXTVAL, #{vsCode}, #{vcode}, #{vafterGrade}, SYSDATE, #{vcause})
+	</insert>
+	
+	<!-- 검증 첨부파일 조회 -->
+	<select id="verificationAttach" resultType="java.lang.String">
+		SELECT REQVATTACH 
+		FROM VIEW_VRLIST
+		WHERE REQVCODE=#{reqvCode}
+	</select>
+	
+	<!-- 검증신청코드로 검증코드 조회(검증완료업데이트에 필요) -->
+	<select id="getVcode" resultType="java.lang.Integer">
+		SELECT VCODE
+		FROM VIEW_VRLIST 
+		WHERE REQVCODE=#{reqvCode}
+	</select>
+	
+</mapper>
+
+
+
+

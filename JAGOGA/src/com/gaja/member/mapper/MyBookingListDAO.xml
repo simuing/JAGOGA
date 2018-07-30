@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    <mapper namespace="com.gaja.member.IMyBookingListDAO">
+    <!-- 예약내역 리스트 출력 -->
+    <select id="bookingList" resultType="com.gaja.dto.VmyBookingListDTO">
+       SELECT BCODE, RNAME, CHECKINDATE, CHECKOUTDATE, BPAY, REFUND, FN_BSTATE(BCODE) AS STATUS 
+      FROM VIEW_BOOKING
+      WHERE GMEMCODE=#{gmemCode }
+      ORDER BY BCODE DESC
+    </select>
+    
+    <!-- 예약내역 리스트 기간별 검색 -->
+    <select id="dateBookingList" resultType="com.gaja.dto.VmyBookingListDTO">
+    <![CDATA[
+       SELECT BCODE, RNAME, CHECKINDATE, CHECKOUTDATE, BPAY, REFUND, FN_BSTATE(BCODE) AS STATUS 
+      FROM VIEW_BOOKING
+      WHERE GMEMCODE=#{gmemCode }
+        AND CHECKINDATE >= TO_DATE(#{startCheck},'YYYY-MM-DD') AND CHECKOUTDATE <= TO_DATE(#{endCheck},'YYYY-MM-DD')
+      ORDER BY BCODE DESC
+    ]]> 
+    </select>
+    
+    
+    <!-- 예약리스트 상세출력 -->
+    <select id="bookingDetail" resultType="com.gaja.dto.VmyBookingListDTO">
+       SELECT BCODE, RNAME, (ADULTCOUNT+CHILDCOUNT+BABYCOUNT) AS HUMANCOUNT, (CHECKINDATE||'~'||CHECKOUTDATE) AS CHECKDATE
+          , BPAY, REFUND, FN_BSTATE(BCODE) AS STATUS, RBASICADDR||RDETAILADDR AS ADDR, MEMETIQUETTE, MEMTEL
+          , (SELECT MEMNAME FROM TBL_MEMBER WHERE MEMCODE = #{gmemCode }) AS GNAME, RTYPE 
+      FROM VIEW_BOOKING WHERE BCODE=#{bcode }
+    </select>
+    
+    <!-- 예약 취소 -->
+    <insert id="bookingCancel">
+       INSERT INTO TBL_CANCEL (CANCELCODE, BCODE, CANCELDATE, CANCELCHECK)
+      VALUES(SEQCANCEL.NEXTVAL, #{bcode }, SYSDATE, 'N')
+    </insert>
+
+    </mapper>
+
+   

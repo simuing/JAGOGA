@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    <mapper namespace="com.gaja.member.ISearchRoomDAO">
+   
+   <!-- 워드 검색 리스트 조회 -->
+   <select id="searchRoomList" resultType="com.gaja.dto.VsearchRoomDTO">
+   <![CDATA[
+      SELECT A.*
+          , COUNT(*) OVER() AS ROWCNT
+      FROM
+      (
+         SELECT T.*
+             , ROWNUM AS RNUM
+         FROM
+         (
+            SELECT RCODE, RNAME, ADULTFEE, NVL((SELECT AVG(POINT)
+                                                FROM VIEW_POINT 
+                                                WHERE RCODE=R.RCODE 
+                                                     GROUP BY RCODE), 10) AS POINT
+                   , (SELECT RIMG
+                   FROM TBL_ROOMIMAGE
+                    WHERE RCODE=R.RCODE
+                   AND RIMGCODE=(SELECT MAX(RIMGCODE)
+                   FROM TBL_ROOMIMAGE
+                   WHERE RCODE=R.RCODE)) AS RIMG 
+            FROM TBL_ROOM R 
+            WHERE RBASICADDR LIKE '%' || #{word} || '%'
+               OR RDETAILADDR LIKE '%' || #{word} || '%'
+               OR RNAME LIKE '%' || #{word} || '%'
+            GROUP BY RCODE, RNAME, ADULTFEE, RBASICADDR
+         )T
+      )A
+      WHERE RNUM > (-12+(#{pageNumber}*12)) AND RNUM <= (#{pageNumber}*12)
+   ]]>   
+   </select>
+   
+   <insert id="insertWord">
+      INSERT INTO TBL_SEARCH(SEARCHCODE, SEARCHWORD, SEARCHDATE) VALUES(SEQSEARCH.NEXTVAL, #{word}, SYSDATE)
+   </insert>
+   
+   
+   
+    </mapper>

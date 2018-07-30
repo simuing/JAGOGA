@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+	<mapper namespace="com.gaja.admin.IAdminDAO">
+	
+	<!-- 관리자코드 조회 -->
+	<select id="adminCode" resultType="java.lang.Integer">
+		SELECT ADMINCODE
+		FROM TBL_ADMIN
+		WHERE ADMINID=#{adminId}
+	</select>
+
+	<!-- 관리자계정 전체 목록 조회 DAO -->
+	<select id="adminList" resultType="com.gaja.dto.VadminDTO">
+		SELECT ADMINCODE, ADMINNAME, ADMINID, ATCODES, ATNAMES, ACTIVE
+		FROM VIEW_ADMIN
+		WHERE ACTIVE='Y'
+	</select>
+	
+	<!-- 특정 관리자계정 조회 DAO -->
+	<select id="adminInfo" resultType="com.gaja.dto.VadminDTO">
+		SELECT ADMINCODE, ADMINNAME, ADMINID, ATCODES
+		FROM VIEW_ADMIN
+		WHERE ADMINCODE = #{adminCode}
+	</select>
+	
+	<!-- 권한 목록 조회 DAO -->
+	<select id="authorityList" resultType="com.gaja.dto.AuthorityDTO">
+		SELECT ATCODE, ATNAME, ATCONTENT 
+		FROM TBL_AUTHORITY
+	</select>
+	
+	
+	<!-- 관리자계정 등록 DAO -->
+	<insert id="adminAdd">
+		INSERT INTO TBL_ADMIN (ADMINCODE, ADMINID, ADMINPW, ADMINNAME) 
+		VALUES(SEQADMIN.NEXTVAL, #{adminId}, CRYPTPACK.ENCRYPT(#{adminPw}, #{adminPw}), #{adminName})	
+	</insert>
+	
+	<!-- 관리자코드 가져오기 DAO -->
+	<select id="getAdminCode" resultType="java.lang.Integer">
+		SELECT ADMINCODE 
+		FROM TBL_ADMIN 
+		WHERE ADMINID = #{adminId}
+	</select>
+	
+	<!-- 관리자계정 권한 등록 DAO -->
+	<!-- 권한 수정시 기존 권한을 모두 삭제하고 입력받은 값을 새롭게 등록하므로 수정시에도 이용 -->
+	<insert id="adminAtAdd">
+		INSERT INTO TBL_ADMINAUTHORITY (ADMINATCODE, ADMINCODE, ATCODE) 
+		VALUES(SEQADMINAUTHORITY.NEXTVAL, #{adminCode}, #{atCode})
+	</insert>
+	
+	<!-- 관리자계정 수정 DAO -->
+	<update id="adminModify">
+		UPDATE TBL_ADMIN
+		SET ADMINNAME=#{adminName}, ADMINPW = CRYPTPACK.ENCRYPT(#{adminPw}, #{adminPw})
+		WHERE ADMINID = #{adminId}
+	</update>
+	
+	<!-- 관리자계정 권한 삭제 DAO -->
+	<!--권한 먼저 삭제한 후에 관리자 계정 삭제 가능함 -->
+	<delete id="adminAtRemove">
+		DELETE
+		FROM TBL_ADMINAUTHORITY 
+		WHERE ADMINCODE=#{adminCode}
+	</delete>
+	
+	<!-- 관리자계정 활성화/비활성화 DAO -->
+	<delete id="adminChangeActive">
+		UPDATE TBL_ADMIN
+		SET ACTIVE=#{active}
+		WHERE ADMINCODE=#{adminCode}
+	</delete>
+	
+	<!-- 관리자 로그인 확인 -->
+	<select id="adminLogin" resultType="java.lang.String">
+		SELECT ACTIVE
+		FROM TBL_ADMIN
+		WHERE ADMINID=#{adminId}
+		  AND ADMINPW=CRYPTPACK.ENCRYPT(#{adminPw}, #{adminPw})
+	</select>
+	
+	
+	<!-- 해당 관리자의 권한 목록 조회 -->
+	<select id="adminAuthority" resultType="java.lang.String">
+		SELECT ATCODE
+		FROM TBL_ADMINAUTHORITY
+		WHERE ADMINCODE=#{adminCode}
+	</select>
+	
+	<!-- 해당 관리자의 권한 목록 조회 -->
+	<select id="duplicateAdminId" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM TBL_ADMIN
+		WHERE ADMINID=#{adminId}
+	</select>
+
+	
+</mapper>
+
+
+
+

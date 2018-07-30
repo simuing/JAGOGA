@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    <mapper namespace="com.gaja.member.IBookingDAO">
+	
+	<!-- 결제약관 조회 -->
+	<select id="bookingTerm" resultType="java.lang.String">
+		SELECT TERMSCONTENT
+		FROM TBL_TERMS
+		WHERE TERMSCODE=3
+	</select>
+	
+	<!-- 예약하기 -->
+	<insert id="insertBooking">
+		INSERT INTO  TBL_BOOKING(BCODE, BADATECODE, MEMCODE, CHECKINDATE, CHECKOUTDATE, BPAY, BDATE, ADULTCOUNT, CHILDCOUNT, BABYCOUNT, IDCARD, HIDECHECK)
+        VALUES (SEQBOOKING.NEXTVAL, #{baDateCode}, #{memCode}, TO_DATE(#{checkInDate}, 'YYYY-MM-DD'), TO_DATE(#{checkOutDate}, 'YYYY-MM-DD')
+              , #{bpay}, SYSDATE, #{adultCount}, #{childCount}, #{babyCount}, #{idCard}, DEFAULT)
+	</insert>
+	
+	<!-- 숙소이름 가져오기 -->
+	<select id="getRname" resultType="java.lang.String">
+		SELECT RNAME
+		FROM TBL_ROOM
+		WHERE RCODE=#{rcode}
+	</select>
+
+	<!-- 숙소 기본주소 가져오기 -->
+	<select id="getRbasicAddr" resultType="java.lang.String">
+		SELECT RBASICADDR
+		FROM TBL_ROOM
+		WHERE RCODE=#{rcode}
+	</select>
+
+	<!-- 숙소 상세주소 가져오기 -->
+	<select id="getRdetailAddr" resultType="java.lang.String">
+		SELECT RDETAILADDR
+		FROM TBL_ROOM
+		WHERE RCODE=#{rcode}
+	</select>
+	
+</mapper>

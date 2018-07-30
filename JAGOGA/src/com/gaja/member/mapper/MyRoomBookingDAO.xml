@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    <mapper namespace="com.gaja.member.IMyRoomBookingDAO">
+   
+      <!-- 내 숙소 예약내역 출력  -->
+      <select id="myRoomBookingList" resultType="com.gaja.dto.VmyRoomBookingDTO">
+         SELECT BCODE, RNAME, BDATE, REALCHECKINDATE, REALCHECKOUTDATE, GMEMID, STARTDATE, ENDDATE, GMEMCODE
+              , BPAY, NVL(REFUND, 0) AS REFUND, FN_BSTATE(BCODE) AS STATUS, CHECKPOINTS
+         FROM VIEW_BOOKING
+         WHERE HMEMCODE=#{memCode}
+         ORDER BY BDATE
+      </select>   
+   
+   
+      <!-- 내 숙소 예약내역 출력 (기간별검색) -->
+     <!--  <select id="myRoomBookingSearch" resultType="com.gaja.dto.VmyRoomBookingDTO">
+      <![CDATA[
+         SELECT BCODE, RNAME, BDATE, REALCHECKINDATE, REALCHECKOUTDATE, STARTDATE, ENDDATE, GMEMID, GMEMCODE
+              , BPAY, NVL(REFUND, 0) AS REFUND, FN_BSTATE(BCODE) AS STATUS, CHECKPOINTS
+         FROM VIEW_BOOKING
+         WHERE HMEMCODE= #{memCode}
+             AND STARTDATE >= TO_DATE(#{startCheck},'YYYY-MM-DD') AND ENDDATE <= TO_DATE(#{endCheck},'YYYY-MM-DD')
+         ORDER BY BDATE
+      ]]> 
+      </select> -->
+      
+      <!-- 에티켓 + 100 점수 주기 -->
+      <update id="plusEtqScore">
+         UPDATE TBL_MEMBER
+         SET MEMETIQUETTE = MEMETIQUETTE +100
+         WHERE MEMCODE= #{memCode}
+      </update>
+      
+      <!-- 에티켓 - 100 점수 주기 -->
+      <update id="minusEtqScore">
+         UPDATE TBL_MEMBER
+         SET MEMETIQUETTE = MEMETIQUETTE -100
+         WHERE MEMCODE = #{memCode}
+      </update>
+      
+      
+      <!-- 예약취소하기 -->
+      <insert id="hostCancelbooking">
+         INSERT INTO TBL_CANCEL (CANCELCODE, BCODE, CANCELDATE, CANCELCHECK)
+         VALUES(SEQCANCEL.NEXTVAL, #{bCode }, SYSDATE, 'N')
+      </insert>
+      
+      <!-- 누가 예약 취소하였는지  -->
+      <insert id="shareWhoCancel">
+         INSERT INTO TBL_BYMEMBER (BYMEMBERCODE, CANCELCODE, MEMCODE)
+         VALUES(SEQBYMEMBER.NEXTVAL, (SELECT MAX(CANCELCODE) FROM TBL_BYMEMBER), #{memCode})
+      </insert>
+      
+      
+      <!-- 숙박완료시  이용완료로 변경시켜주기 -->
+      <insert id="changeStatus">
+         INSERT INTO TBL_USEDLIST (ULISTCODE, BCODE, REALCHECKINDATE, REALCHECKOUTDATE, ADULTCOUNT, CHILDCOUNT, BABYCOUNT, SPECIALNOTE, ULISTREGDATE)
+         VALUES(SEQUSEDLIST.NEXTVAL, #{bCode}, TO_DATE(#{realCheckInDate}), TO_DATE(#{realCheckOutDate}), #{adultCount}, #{childCount}, #{babyCount}, #{specialNote}, SYSDATE);
+      
+      </insert>
+      
+      
+      <!-- 에티켓 평가 완료로 변경 -->
+      <update id="endPoint">
+         UPDATE TBL_USEDLIST
+            SET CHECKPOINTS = 'Y'
+            WHERE ULISTCODE=(SELECT ULISTCODE FROM VIEW_BOOKING WHERE GMEMCODE=#{gmemCode} AND BCODE=#{bcode})
+      </update>
+      
+   
+    </mapper>

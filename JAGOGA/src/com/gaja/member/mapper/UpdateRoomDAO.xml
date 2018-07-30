@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    <mapper namespace="com.gaja.member.IUpdateRoomDAO">
+   <!-- UpdateRoom. 숙소 수정 -->
+   <update id="updateRoom">
+      UPDATE TBL_ROOM
+      SET RNAME = #{rname}, RCONTENT = #{rcontent}, ADULTFEE = #{adultFee}, CHILDFEE = #{childFee}
+               , MINHUMANCOUNT = #{minHumanCount}, MAXHUMANCOUNT = #{maxHumanCount}
+      WHERE RCODE = #{rcode}
+   </update>
+
+
+   <!-- UpdateRoom. 선택된 편의시설 목록 조회 -->
+   <select id="pickConv" resultType="com.gaja.dto.ConvenienceDTO">
+      SELECT CONVCODE, CONVCONTENT
+      FROM TBL_CONVENIENCE
+      WHERE CONVCODE=#{rconvCode}
+   </select>
+   
+   <!-- UpdateRoom. 선택된 제한사항 목록 조회 -->
+   <select id="pickCons" resultType="com.gaja.dto.ConstraintDTO">
+      SELECT CONSCODE, CONSCONTENT
+      FROM TBL_CONSTRAINT
+      WHERE CONSCODE=#{rconsCode}
+   </select>
+
+
+
+   <!-- UpdateRoom. 숙소 편의사항 삭제 -->
+   <delete id="deleteRoomConv">
+      DELETE
+      FROM TBL_ROOMCONVENIENCE
+      WHERE RCODE = #{rcode}
+   </delete>
+
+   <!-- UpdateRoom. 숙소 제한사항 삭제 -->
+   <delete id="deleteRoomCons">
+      DELETE
+      FROM TBL_ROOMCONSTRAINT
+      WHERE RCODE = #{rcode}
+   </delete>
+
+   <!-- UpdateRoom. 예약가능날짜 삭제 -->
+   <!-- <delete id="deleteBookableDate">
+      DELETE
+      FROM TBL_BOOKABLEDATE
+      WHERE RCODE = #{rcode}
+   </delete> -->
+   <!-- 예약가능코드를 참조하고있는 테이블의 레코드가 있기 때문에 삭제되지 않는 레코드도 있다.  -->
+
+   <!-- UpdateRoom. 숙소 이미지 삭제 -->
+   <delete id="deleteRoomImage">
+      DELETE
+      FROM TBL_ROOMIMAGE
+      WHERE RCODE = #{rcode}
+   </delete>
+
+
+
+
+   <!-- UpdateRoom. 숙소 편의사항 입력 -->
+   <insert id="insertRoomConv">
+      INSERT INTO TBL_ROOMCONVENIENCE (RCONVCODE, RCODE,
+      CONVCODE, CONVDATE)
+      VALUES(SEQROOMCONVENIENCE.NEXTVAL, #{rcode},
+      #{convCode}, SYSDATE)
+   </insert>
+
+   <!-- UpdateRoom. 숙소 제한사항 입력 -->
+   <insert id="insertRoomCons">
+      INSERT INTO TBL_ROOMCONSTRAINT(RCONSCODE, RCODE,
+      CONSCODE, CONSDATE)
+      VALUES(SEQROOMCONSTRAINT.NEXTVAL, #{rcode},
+      #{consCode}, SYSDATE)
+   </insert>
+
+   <!-- UpdateRoom. 예약가능날짜 입력 -->
+   <insert id="insertBookableDate">
+      INSERT INTO TBL_BOOKABLEDATE (BADATECODE, RCODE,
+      STARTDATE, ENDDATE)
+      VALUES(SEQBOOKABLEDATE.NEXTVAL, #{rcode},
+      #{startDate}, #{endDate})
+   </insert>
+
+   <!-- UpdateRoom. 숙소 이미지 입력 -->
+   <insert id="insertRoomImage">
+      INSERT INTO TBL_ROOMIMAGE (RIMGCODE, RCODE, RIMG)
+      VALUES(SEQROOMIMAGE.NEXTVAL, #{rcode}, #{rimg})
+   </insert>
+   
+   </mapper>

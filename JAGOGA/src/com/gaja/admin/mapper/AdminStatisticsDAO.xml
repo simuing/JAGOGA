@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gaja.admin.IAdminStatisticsDAO">
+
+	<!-- 전날 새로운 회원가입 수 -->
+	<select id="newMemberCount" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS NEWMEMBER 
+		FROM TBL_MEMBER 
+		WHERE TRUNC(MEMJOINDATE) = TRUNC(SYSDATE-1)
+	</select>
+	
+	<!-- 전날 새로운 호스팅 수 -->
+	<select id="newRoomCount" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS NEWROOM
+		FROM TBL_ROOM
+		WHERE TRUNC(RREGDATE)=TRUNC(SYSDATE-1)
+	</select>
+	
+	<!-- 전날 매출 (수수료 총액) -->
+	<select id="yesterdaySales" resultType="java.lang.Integer">
+		SELECT YESTERDAYSALES
+		FROM VIEW_YESTERDAYSALES
+	</select>
+	
+	<!-- 전달 대비 매출 추이 -->
+	<select id="salesRate" resultType="java.lang.Integer">
+		SELECT ROUND((THISMONTH/MONTH1)*100, 1) "RISERATE"
+		FROM VIEW_SALES
+	</select>
+	
+	<!-- 매출추이 조회(최근 12달) -->
+	<select id="recentSales" resultType="com.gaja.dto.VstatisticsDTO">
+		SELECT THISMONTH, MONTH1, MONTH2, MONTH3, MONTH4, MONTH5, MONTH6
+			 , MONTH7, MONTH8, MONTH9, MONTH10, MONTH11, MONTH12, THISMONTHNAME
+		FROM VIEW_SALES
+	</select>
+	
+	<!-- 이번달 매출 -->
+	<select id="thisMonthSales" resultType="java.lang.Integer" >
+		<![CDATA[
+			SELECT (NVL(SUM(B.BPAY), 0)-NVL(SUM(R.REFUND), 0))*0.1 "THISMONTHSALES"
+			FROM TBL_BOOKING B LEFT JOIN TBL_USEDLIST U
+			ON B.BCODE=U.BCODE LEFT JOIN TBL_CANCEL C
+			ON B.BCODE=C.BCODE LEFT JOIN TBL_REFUND R
+			ON C.CANCELCODE=R.CANCELCODE
+			WHERE ( U.ULISTREGDATE <= LAST_DAY(SYSDATE)
+			        AND U.ULISTREGDATE >= TRUNC(SYSDATE, 'MM'))
+			   OR ( R.RFDDATE <= LAST_DAY(SYSDATE)
+			        AND R.RFDDATE >= TRUNC(SYSDATE, 'MM'))
+		]]>
+	</select>
+	
+	<!-- 연령대별 회원 수  -->
+	<select id="ageGroupCount" resultType="java.lang.Integer">
+		SELECT COUNT
+		FROM VIEW_COUNTAGE
+		ORDER BY AGE
+	</select>
+	
+	<!-- 에티켓등급별 회원 수  -->
+	<select id="etqMemCount" resultType="com.gaja.dto.VstatisticsDTO">
+		<![CDATA[
+		SELECT COUNT(CASE WHEN MEMETIQUETTE <= 3000 THEN '최악회원' END)"WORST"
+		     , COUNT(CASE WHEN MEMETIQUETTE > 3000 AND MEMETIQUETTE <= 4000 THEN '불량회원' END)"BAD"
+		     , COUNT(CASE WHEN MEMETIQUETTE > 4000 AND MEMETIQUETTE <= 7000 THEN '일반회원' END)"ORDINARY"
+		     , COUNT(CASE WHEN MEMETIQUETTE > 7000 AND MEMETIQUETTE <= 9000 THEN '우수회원' END)"GOOD"
+		     , COUNT(CASE WHEN MEMETIQUETTE > 9000 AND MEMETIQUETTE <= 10000 THEN '최우수회원' END)"BEST"
+		FROM TBL_MEMBER
+		GROUP BY MEMETIQUETTE
+		]]>
+	</select>
+	
+	
+	<!-- 지역별 매출 통계 -->
+	<select id="regionSales" resultType="com.gaja.dto.VstatisticsDTO">
+		SELECT SUBSTR(T.RBASICADDR,1,2) AS REGION, SUM(T.BPAY) AS SUMBPAY 
+		FROM (SELECT B.BPAY AS BPAY, RO.RBASICADDR AS RBASICADDR 
+		      FROM TBL_BOOKING B LEFT JOIN TBL_CANCEL C ON B.BCODE = C.BCODE 
+		                         LEFT JOIN TBL_REFUND RF ON C.CANCELCODE = RF.CANCELCODE 
+		                         LEFT JOIN TBL_USEDLIST U ON U.BCODE = B.BCODE 
+		                         LEFT JOIN TBL_BOOKABLEDATE BA ON BA.BADATECODE = B.BADATECODE 
+		                         LEFT JOIN TBL_ROOM RO ON RO.RCODE = BA.RCODE 
+		      WHERE U.BCODE = B.BCODE)T 
+		GROUP BY SUBSTR(T.RBASICADDR,1,2)
+		ORDER BY SUMBPAY DESC
+	</select>
+	
+	<!-- 면적별 매출 통계 -->
+	<select id="areaSales" resultType="com.gaja.dto.VstatisticsDTO">
+		SELECT T.RAREA AS RAREA, SUM(T.BPAY) AS BPAY
+		FROM (SELECT CASE WHEN RAREA >= 100 THEN 'UPPER100㎡' 
+		                  WHEN RAREA >= 75 THEN 'UPPER75' 
+		                  WHEN RAREA >= 50 THEN 'UPPER50' 
+		                  WHEN RAREA >= 25 THEN 'UPPER25' 
+		                  ELSE 'UNDER25' 
+		             END AS RAREA
+		      , B.BPAY AS BPAY 
+		      FROM TBL_BOOKING B LEFT JOIN TBL_CANCEL C ON B.BCODE = C.BCODE 
+		                         LEFT JOIN TBL_REFUND RF ON C.CANCELCODE = RF.CANCELCODE 
+		                         LEFT JOIN TBL_USEDLIST U ON U.BCODE = B.BCODE 
+		                         LEFT JOIN TBL_BOOKABLEDATE BA ON BA.BADATECODE = B.BADATECODE 
+		                         LEFT JOIN TBL_ROOM RO ON RO.RCODE = BA.RCODE 
+		      WHERE U.BCODE = B.BCODE)T 
+		GROUP BY T.RAREA
+	</select>
+	
+	<!-- 사용자별 회원 통계 -->
+	<select id="memCateCount" resultType="com.gaja.dto.VstatisticsDTO">
+		SELECT ALLMEMBER, HOST, GUEST, ALLMEMBER-GUEST-ONLYHOST"GHOST"
+		FROM
+		(
+			SELECT (SELECT COUNT(MEMCODE)
+			        FROM TBL_MEMBER)"ALLMEMBER"
+			     , (SELECT COUNT(DISTINCT MEMCODE)
+			        FROM TBL_ROOMCODE)"HOST"
+			     , (SELECT COUNT(*)
+			        FROM TBL_BOOKING B LEFT JOIN TBL_BOOKABLEDATE BA
+			        ON B.BADATECODE=BA.BADATECODE LEFT JOIN TBL_ROOMCODE R
+			        ON BA.RCODE=R.RCODE LEFT JOIN TBL_MEMBERCODE M
+			        ON R.MEMCODE=M.MEMCODE)"GUEST"
+			     , (SELECT COUNT(DISTINCT R.MEMCODE)
+			        FROM TBL_ROOMCODE R LEFT JOIN TBL_MEMBERCODE M
+			        ON R.MEMCODE=M.MEMCODE LEFT JOIN TBL_BOOKABLEDATE BA
+			        ON BA.RCODE=R.RCODE LEFT JOIN TBL_BOOKING B
+			        ON B.BADATECODE=BA.BADATECODE
+			        WHERE B.BCODE IS NULL)"ONLYHOST"
+			FROM DUAL
+		)
+	</select>
+
+	<!-- 회원 성별 통계 -->
+	<select id="memGenderCount" resultType="com.gaja.dto.VstatisticsDTO">
+		SELECT COUNT(CASE WHEN SUBSTR(MEMSSN, 7) = 1 THEN 'MAN' END)"MEN"
+		     , COUNT(CASE WHEN SUBSTR(MEMSSN, 7) = 2 THEN 'WOMAN' END)"WOMEN"
+		FROM TBL_MEMBER
+	</select>
+
+	<!-- 인기 검색어 통계 -->
+	<select id="searchWord" resultType="com.gaja.dto.VstatisticsDTO">
+		SELECT SEARCHWORD AS SEARCHWORD, COUNT(SEARCHWORD) AS COUNT 
+		FROM TBL_SEARCH 
+		GROUP BY SEARCHWORD 
+		ORDER BY COUNT DESC
+	</select>
+	
+	
+</mapper>

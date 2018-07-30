@@ -1,0 +1,77 @@
+@CHARSET "UTF-8";
+.roomimg 
+{
+	position: relative;
+	width: 100%;
+	height: 350px;
+	background-image: url("../img/mainimg.jpg");
+	background-size: 100% 100%;
+	margin: 1rem;
+}
+.roomtext
+{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	padding: 45px;
+	padding-top: 70px;
+	color: white;
+	font-family: 'Do Hyeon', sans-serif;
+	text-shadow: 2px 2px 2px gray;
+}
+.roomtitle
+{
+	font-family: 'Do Hyeon', sans-serif;
+	font-size: 60px;
+	padding: 5px;
+}
+.roomtext p
+{
+	font-size: 20px;
+}
+.btn-group { float: right; }
+.roomlistbtn
+{
+	background-color: white;
+	border-radius: 2px;
+	border: 1px solid skyblue;
+	color: skyblue;
+	margin-bottom:10px;
+}
+
+.roomtitle>a
+{
+	text-decoration: none;
+	color: white;
+	
+}
+.roomlink
+{
+	padding-top: 30px;
+}
+.roomlink>a
+{
+	font-family: 'Do Hyeon', sans-serif;
+	float: right;
+	margin-left: 15px;
+	text-decoration: none;
+	color: white;
+	font-size: 25px;
+}
+.roomlink>a:hover, .roomtitle a:hover,
+.roomlink>a:active, .roomtitle a:active,
+.roomlink>a:focus, .roomtitle a:focus
+{
+	cursor: pointer;
+	color: skyblue;
+	transition: 0.3s;
+}
+.label
+{
+	padding: 1px 13px 1px;
+}
+.roomlink>img
+{
+	width: 20px;
+	height: 20px;
+}

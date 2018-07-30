@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    <mapper namespace="com.gaja.admin.IAdminPayListDAO">
+    
+    
+   	<!-- 전체 리스트 출력 -->
+   	<!-- 함수 확인 -->
+   	<select id="adminPayList" resultType="com.gaja.dto.VadminPayListDTO">
+	<![CDATA[
+		SELECT A.*
+			 , COUNT(*) OVER() AS ROWCNT
+		FROM
+		(
+			SELECT T.*
+				 , ROWNUM AS RNUM
+			FROM
+			(
+				SELECT BCODE, RCODE, RNAME, BDATE, HMEMID, GMEMID, FN_BSTATE(BCODE) AS STATUS
+				FROM VIEW_BOOKING
+				ORDER BY BCODE DESC
+			)T
+		)A
+		WHERE RNUM > (-10+(#{pageNumber}*10)) AND RNUM <= (#{pageNumber}*10)
+	]]>
+	</select>
+
+	<!-- 결제번호로 결제목록검색 -->
+	<select id="adminPayNumBooking" resultType="com.gaja.dto.VadminPayListDTO">
+		SELECT BCODE, RCODE, RNAME, BDATE, HMEMCODE, GMEMCODE, FN_BSTATE(BCODE) AS STATUS
+		FROM VIEW_BOOKING
+		WHERE BCODE = #{bcode}
+		ORDER BY BDATE DESC
+	</select>
+	
+	<!-- 숙소번호로 결제목록검색 -->
+	<select id="adminRoomNumBooking" resultType="com.gaja.dto.VadminPayListDTO">
+		SELECT BCODE, RCODE, RNAME, BDATE, CHECKINDATE, CHECKOUTDATE, GMEMID, IDCARD, FN_BSTATE(BCODE) AS STATUS
+		FROM VIEW_BOOKING
+		WHERE RCODE = #{rcode}
+		ORDER BY BDATE DESC
+	</select>
+	
+	<!-- 예약번호로 상세내역 조회 -->
+	<select id="detailBooking" resultType="com.gaja.dto.VadminPayListDTO">
+		SELECT B.BCODE AS BCODE, B.ADULTCOUNT AS ADULTCOUNT,  B.CHILDCOUNT AS CHILDCOUNT
+		     , B.BABYCOUNT AS BABYCOUNT, B.CHECKINDATE AS CHECKINDATE, B.CHECKOUTDATE AS CHECKOUTDATE
+		     , R.RNAME AS RNAME, RT.RTYPE AS RTYPE, R.RAREA AS RAREA
+		     , (B.ADULTCOUNT*R.ADULTFEE)+(B.CHILDCOUNT*R.CHILDFEE) AS TOTALFEE
+		FROM TBL_BOOKING B LEFT JOIN TBL_BOOKABLEDATE BA
+		ON B.BADATECODE=BA.BADATECODE LEFT JOIN TBL_ROOM R
+		ON R.RCODE=BA.BADATECODE LEFT JOIN TBL_ROOMTYPE RT
+		ON R.RTYPECODE=RT.RTYPECODE
+		WHERE B.BCODE=#{bcode}
+	</select>
+	
+
+	<!-- 호스트아이디로 결제목록검색 -->
+	<select id="adminHostIdBooking" resultType="com.gaja.dto.VadminPayListDTO">
+		SELECT BCODE, RCODE, RNAME, BDATE, HMEMCODE, GMEMCODE, {call PROC_BSTATE(BCODE)}
+		FROM VIEW_BOOKING
+	    WHERE HMEMCODE LIKE '%' || #{hostId} || '%'
+		ORDER BY BDATE DESC
+	</select>
+	
+	
+	<!-- 게스트아이디로 결제목록검색 -->
+	<select id="adminGuestIdBooking" resultType="com.gaja.dto.VadminPayListDTO">
+		SELECT BCODE, RCODE, RNAME, BDATE, HMEMCODE, GMEMCODE, {call PROC_BSTATE(BCODE)}
+		FROM VIEW_BOOKING
+	    WHERE GMEMCODE LIKE '%' || #{guestId} || '%'
+		ORDER BY BDATE DESC
+	</select>
+	
+	
+	
+	<!-- 결제번호와 거래상태에따른 리스트 출력 -->
+	<select id="adminPayNumstatusBooking" resultType="com.gaja.dto.VadminPayListDTO">
+		SELECT BCODE, RCODE, RNAME, BDATE, HMEMCODE, GMEMCODE, {call PROC_BSTATE(BCODE)}
+		FROM VIEW_BOOKING
+		<where>
+		WHERE BCODE = #{payCode} AND {call PROC_BSTATE(BCODE)} LIKE '%' || #{status} || '%'
+		</where>
+		ORDER BY BDATE DESC
+	</select>
+	
+	<!-- 숙소번호와 거래상태에따른 리스트 출력 -->
+		<select id="adminRoomNumstatusBooking" resultType="com.gaja.dto.VadminPayListDTO">
+		SELECT BCODE, RCODE, RNAME, BDATE, HMEMCODE, GMEMCODE, {call PROC_BSTATE(BCODE)}
+		FROM VIEW_BOOKING
+		<where>
+		WHERE RCODE = #{roomCode} AND {call PROC_BSTATE(BCODE)} LIKE '%' || #{status} || '%'
+		</where>
+		ORDER BY BDATE DESC
+		</select>
+		
+	
+	<!-- 호스트아이디와 거래상태에따른 리스트 출력 -->
+	<select id="adminHostIdstatusBooking" resultType="com.gaja.dto.VadminPayListDTO">
+		SELECT BCODE, RCODE, RNAME, BDATE, HMEMCODE, GMEMCODE, {call PROC_BSTATE(BCODE)}
+		FROM VIEW_BOOKING
+		<where>
+	    WHERE HMEMCODE LIKE '%' || #{hostId} || '%' AND {call PROC_BSTATE(BCODE)} LIKE '%' || #{status} || '%'
+	    </where>
+		ORDER BY BDATE DESC
+	
+	</select>
+	<!-- 게스트아이디와 거래상태에따른 리스트 출력 -->
+	<select id="adminGuestIdstatusBooking" resultType="com.gaja.dto.VadminPayListDTO">
+		SELECT BCODE, RCODE, RNAME, BDATE, HMEMCODE, GMEMCODE, {call PROC_BSTATE(BCODE)}
+		FROM VIEW_BOOKING
+		<where>
+	    WHERE GMEMCODE LIKE '%' || #{guestId} || '%' AND {call PROC_BSTATE(BCODE)} LIKE '%' || #{status} || '%'
+	    </where>
+		ORDER BY BDATE DESC
+	</select>
+	
+	
+	<!-- 거래상태에따른 리스트 출력 -->
+	<select id="statusBooking" resultType="com.gaja.dto.VadminPayListDTO">
+		SELECT BCODE, RCODE, RNAME, BDATE, HMEMCODE, GMEMCODE, {call PROC_BSTATE(BCODE)}
+		FROM VIEW_BOOKING
+		<where>
+	    WHERE {call PROC_BSTATE(BCODE)} LIKE '%' || #{status} || '%'
+	    </where>
+		ORDER BY BDATE DESC
+	</select>
+	
+
+	<!-- 해당숙소 전체 예약내역 조회 -->
+	<select id="adminBookingList" resultType="com.gaja.dto.VadminPayListDTO">
+		SELECT BCODE, RCODE, RNAME, BDATE, HMEMCODE, GMEMCODE, {call PROC_BSTATE(BCODE)}, CHECKINDATE , CHECKOUTDATE
+		FROM VIEW_BOOKING
+		WHERE RCODE= #{rCode}
+		ORDER BY BDATE DESC
+	</select>
+	
+	<!-- 회원 정보조회 회원정보에서 처리가능 -->
+	<select id="memberList" resultType="com.gaja.dto.MemberDTO">
+	SELECT MEMID, MEMNAME, SUBSTR(MEMSSN,1,6)||'-'||SUBSTR(MEMSSN,7,1)||'*****' AS MEMSSN, MEMTEL, MEMEMAIL, MEMETIQUETTE 
+	FROM TBL_MEMBER WHERE MEMCODE=#{memCode}
+	</select>
+	
+	<!-- 취소 신청 -->
+	<insert id="requestCancel">
+	INSERT INTO TBL_CANCEL(CANCELCODE, BCODE, CANCELDATE, CANCELCHECK)
+	VALUES(SEQCANCEL.NEXTVAL, #{bcode}, SYSDATE, 'Y')
+	</insert>
+	
+	<!-- 관리자 예약 취소(관리자취소 테이블 인서트) -->
+	<insert id="adminCancel">
+	INSERT INTO TBL_BYADMIN(BYADMINCODE, CANCELCODE, ADMINCODE, CANCELCAUSE)
+	VALUES(SEQBYADMIN.NEXTVAL, #{cancelCode}, #{adminCode}, #{cancelCause})
+	</insert>
+	
+	<!-- 환불내역 (환불내역 테이블 인서트) -->
+	<insert id="refundList">
+	INSERT INTO TBL_REFUND(RFDCODE, CANCELCODE, REFUND, RFDDATE)
+	VALUES(SEQREFUND.NEXTVAL, #{cancelCode}, #{refund}, SYSDATE)
+	</insert>
+	
+	<!-- bcode로 cancelCode 조회 -->
+	<select id="getCancelCode" resultType="java.lang.Integer">
+	SELECT CANCELCODE
+	FROM TBL_CANCEL
+	WHERE BCODE=#{bcode}
+	</select>
+	
+
+	</mapper>

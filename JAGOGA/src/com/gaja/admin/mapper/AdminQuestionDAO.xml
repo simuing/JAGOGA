@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gaja.admin.IAdminQuestionDAO">
+
+	<!-- 문의목록 조회 -->
+	<select id="questionList" resultType="com.gaja.dto.VquestionDTO">
+	<![CDATA[
+		SELECT A.*
+			 , COUNT(*) OVER() AS ROWCNT
+		FROM
+		(
+			SELECT T.*
+				 , ROWNUM AS RNUM
+			FROM
+			(
+				SELECT QSTCODE, QSTCCONTENT, QSTTITLE, MEMID, QSTDATE, ADMINID
+					 , CASE WHEN QSTANSCODE IS NOT NULL THEN '답변완료' 
+					   ELSE '답변대기' 
+					   END AS QSTANSSTATE
+				FROM VIEW_QUESTION
+				ORDER BY QSTCODE DESC
+			)T
+		)A
+		WHERE RNUM > (-10+(#{pageNumber}*10)) AND RNUM <= (#{pageNumber}*10)
+	]]>
+	</select>
+	
+	<!-- 문의목록 조회(답변대기상태만) -->
+	<select id="waitingQuestionList" resultType="com.gaja.dto.VquestionDTO">
+		SELECT QSTCODE, QSTCCONTENT, QSTTITLE, MEMID, QSTDATE
+		, CASE WHEN QSTANSCODE IS NOT NULL THEN '답변완료' 
+		ELSE '답변대기' END AS QSTANSSTATE
+		FROM VIEW_QUESTION 
+		WHERE QSTANSCODE IS NULL 
+		ORDER BY QSTCODE
+	</select>
+	
+	<!-- 선택문의 상세조회 -->
+	<select id="selectQuestion" resultType="com.gaja.dto.VquestionDTO">
+		SELECT QSTCODE, QSTCCONTENT, QSTTITLE, QSTCONTENT, MEMID
+			 , QSTATTACH, QSTDATE, ADMINID, ADMINANS, ADMINANSDATE
+			 , CASE WHEN QSTANSCODE IS NOT NULL THEN '답변완료' 
+			   ELSE '답변대기'
+			   END AS QSTANSSTATE 
+		FROM VIEW_QUESTION 
+		WHERE QSTCODE = #{qstCode} 
+		ORDER BY QSTCODE
+	</select>
+
+	<!-- FAQ 문의분류별 조회 -->
+	<select id="faqList" resultType="com.gaja.dto.VfaqDTO">
+		SELECT QSTCCODE, QSTCCONTENT, FAQCODE, FAQTITLE
+     		 , FAQCONTENT, FAQANS, FAQREGDATE, FAQMODIFYDATE
+             , ADMINCODE, ADMINID, ADMINPW, ADMINNAME
+		FROM VIEW_FAQ
+	</select>
+	
+	<!-- FAQ 등록 -->
+	<insert id="faqInsert">
+		INSERT INTO TBL_FAQ (FAQCODE, ADMINCODE, QSTCCODE, FAQTITLE, FAQCONTENT, FAQANS, FAQREGDATE, FAQMODIFYDATE)
+		VALUES(SEQFAQ.NEXTVAL, #{adminCode}, #{qstcCode}, #{faqTitle}, #{faqContent}, #{faqAns}, SYSDATE, NULL)
+	</insert>
+	
+	<!-- FAQ 수정 -->
+	<update id="faqUpdate">
+		UPDATE TBL_FAQ
+		SET ADMINCODE = #{adminCode}, FAQTITLE = #{faqTitle}, FAQCONTENT = #{faqContent}, FAQANS = #{faqAns}, FAQMODIFYDATE = SYSDATE
+		WHERE FAQCODE = #{faqCode}	
+	</update>
+	
+	<!-- FAQ 삭제 -->
+	<delete id="faqDelete">
+		DELETE FROM TBL_FAQ
+		WHERE FAQCODE=#{faqCode}
+	</delete>
+	
+	<!-- 정책및이용약관 조회 -->
+	<!-- TERMSCODE 1번이 정책및이용약관.  -->
+	<select id="policiesTerms" resultType="com.gaja.dto.TermsDTO">
+		SELECT TERMSCODE, TERMSTITLE, TERMSCONTENT, TERMSREGDATE, TERMSMODIFYDATE, ADMINCODE
+		FROM TBL_TERMS
+		WHERE TERMSCODE = 1
+	</select>
+	
+	<!-- 개인정보취급방침 조회 -->
+	<!-- TERMSCODE 2번이 개인정보취급방침.  -->
+	<select id="privacyTerms" resultType="com.gaja.dto.TermsDTO">
+		SELECT TERMSCODE, TERMSTITLE, TERMSCONTENT, TERMSREGDATE, TERMSMODIFYDATE, ADMINCODE
+		FROM TBL_TERMS
+		WHERE TERMSCODE = 2
+	</select>
+	
+	<!-- 약관 수정 -->
+	<update id="TermsUpdate">
+		UPDATE TBL_TERMS
+		SET TERMSCONTENT = #{termsContent}, TERMSMODIFYDATE = SYSDATE, ADMINCODE = #{adminCode}
+		WHERE TERMSCODE = #{termsCode}
+	</update>
+	
+	
+	<!-- 결제 약관 조회 -->
+	<!-- TERMSCODE 3번이 결제 약관.  -->
+	<select id="bookingTerms" resultType="com.gaja.dto.TermsDTO">
+		SELECT TERMSCODE, TERMSTITLE, TERMSCONTENT, TERMSREGDATE, TERMSMODIFYDATE, ADMINCODE
+		FROM TBL_TERMS
+		WHERE TERMSCODE = 3
+	</select>
+	
+	<!-- 결제 약관 수정 -->
+	<update id="bookingTermsUpdate">
+		UPDATE TBL_TERMS
+		SET TERMSTITLE = #{termsTitle}, TERMSCONTENT = #{termsContent}, TERMSMODIFYDATE = SYSDATE, ADMINCODE = #{adminCode}
+		WHERE TERMSCODE = 3
+	</update>
+	
+	<!-- 문의 답변 -->
+	<insert id="registAnswer">
+		INSERT INTO TBL_QUESTIONANSWER(QSTANSCODE, QSTCODE, ADMINCODE, ADMINANS, ADMINANSDATE)
+		VALUES(SEQQUESTIONANSWER.NEXTVAL, #{qstCode}, #{adminCode}, #{adminAns}, SYSDATE)
+	</insert>
+	
+	<!-- 관리자코드 조회 -->
+	<select id="adminCode" resultType="java.lang.Integer">
+		SELECT ADMINCODE
+		FROM TBL_ADMIN
+		WHERE ADMINID=#{adminId}
+	</select>
+	
+	
+</mapper>
+
+
+
+

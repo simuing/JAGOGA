@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gaja.admin.IAdminMemberDAO">
+
+	<!-- 특정 회원 상세 정보 -->
+	<!-- 관리자가 회원 정보 수정을 눌렀거나 그 외 특정 회원의 정보만이 새 창으로 조회될 때 -->
+	<select id="aMemberInfo" resultType="com.gaja.dto.MemberDTO">
+		SELECT MEMCODE, MEMID, MEMNAME
+		     , SUBSTR(MEMSSN,1,6)||'-'||SUBSTR(MEMSSN,7,1)||'*****' AS MEMSSN
+		     , MEMTEL, MEMEMAIL, MEMETIQUETTE
+		FROM TBL_MEMBER
+		WHERE MEMCODE=#{memCode}
+	</select>
+	
+	<!-- 관리자측에서 전체 회원 조회 -->
+	<select id="aMemberList" resultType="com.gaja.dto.VMemberDTO">
+	<![CDATA[
+		SELECT A.*
+			 , COUNT(*) OVER() AS ROWCNT
+		FROM
+		(
+			SELECT T.*
+				 , ROWNUM AS RNUM
+			FROM
+			(
+				SELECT MEMCODE, MEMID, MEMNAME, MEMSSN, MEMTEL, MEMEMAIL, MEMETIQUETTE
+				     , MEMPROFILE, MEMJOINDATE, STATUS, ADMINID
+				FROM VIEW_MEMBERMANAGEMENT
+				ORDER BY MEMCODE DESC
+			)T
+		)A
+		WHERE RNUM > (-10+(#{pageNumber}*10)) AND RNUM <= (#{pageNumber}*10)
+	]]>
+	</select>
+
+	<!-- 특정 회원번호로 회원정보 검색 결과  -->
+	<select id="aMemCodeSearch" resultType="com.gaja.dto.VMemberDTO">
+		SELECT MEMCODE, MEMID, MEMNAME, MEMSSN, MEMTEL, MEMEMAIL
+		     , MEMETIQUETTE, MEMPROFILE, MEMJOINDATE, STATUS, ADMINID 
+		FROM VIEW_MEMBERMANAGEMENT 
+		WHERE MEMCODE = #{code}
+	</select>
+	
+	<!-- 특정 회원아이디로 회원정보 검색 결과 -->
+	<select id="aMemIdSearch" resultType="com.gaja.dto.VMemberDTO">
+		SELECT MEMCODE, MEMID, MEMNAME, MEMSSN, MEMTEL, MEMEMAIL
+		     , MEMETIQUETTE, MEMPROFILE, MEMJOINDATE, STATUS, ADMINID 
+		FROM VIEW_MEMBERMANAGEMENT 
+		WHERE MEMId = #{memId}
+	</select>
+	
+	<!-- 특정 회원 휴대폰번호로 회원정보 검색 결과  -->
+	<select id="aMemTelSearch" resultType="com.gaja.dto.VMemberDTO">
+		SELECT MEMCODE, MEMID, MEMNAME, MEMSSN, MEMTEL, MEMEMAIL
+		     , MEMETIQUETTE, MEMPROFILE, MEMJOINDATE, STATUS, ADMINID 
+		FROM VIEW_MEMBERMANAGEMENT 
+		WHERE MEMTEL = #{memTel}
+	</select>
+	
+	
+	<!-- 관리자가  회원 탈퇴시키는 기능 -->
+	<delete id="adminDeleteMem">
+		{call PROC_LEAVEMEMBER(#{memCode})}
+	</delete>
+	
+	
+	<!-- 영구정지 처리 -->
+	<insert id="blockMember">
+		INSERT INTO TBL_BLOCKLIST(BLISTCODE, MEMCODE, ADMINCODE, BLOCKDATE, BLOCKCAUSE)
+		VALUES(SEQBLOCKLIST.NEXTVAL, #{memCode}, #{adminCode}, SYSDATE, #{blockCause})
+	</insert>
+	
+	
+	<!-- 정지 사유 및 처리자 조회  -->
+	<select id="checkBlockCause" resultType="com.gaja.dto.VMemberDTO">
+		SELECT B.BLOCKCAUSE"BLOCKCAUSE", A.ADMINID"ADMINID" 
+		FROM TBL_BLOCKLIST B LEFT JOIN TBL_ADMIN A
+		ON B.ADMINCODE=A.ADMINCODE
+		WHERE MEMCODE=#{memCode}
+	</select>
+	
+	
+	<!-- 영구정지 복구 -->
+	<delete id="restoreBlock">
+		DELETE
+		FROM TBL_BLOCKLIST
+		WHERE MEMCODE=#{memCode}
+	</delete>
+	
+	<!-- 탈퇴계정 복구 -->
+	<insert id="restoreLeave">
+		INSERT INTO TBL_MEMBER(MEMCODE, MEMID, MEMPW, MEMNAME, MEMSSN, MEMTEL, MEMEMAIL, MEMETIQUETTE, MEMPROFILE, MEMJOINDATE)
+		VALUES((SELECT MEMCODE FROM TBL_LEAVEMEMBER WHERE MEMCODE=#{memCode})
+		     , (SELECT LMEMID FROM TBL_LEAVEMEMBER WHERE MEMCODE=#{memCode})
+		     , (SELECT CRYPTPACK.ENCRYPT(LMEMID, LMEMID) FROM TBL_LEAVEMEMBER WHERE MEMCODE=#{memCode})
+		     , (SELECT LMEMNAME FROM TBL_LEAVEMEMBER WHERE MEMCODE=#{memCode})
+		     , (SELECT LMEMSSN FROM TBL_LEAVEMEMBER WHERE MEMCODE=#{memCode})
+		     , (SELECT LMEMTEL FROM TBL_LEAVEMEMBER WHERE MEMCODE=#{memCode})
+		     , (SELECT LMEMEMAIL FROM TBL_LEAVEMEMBER WHERE MEMCODE=#{memCode})
+		     , (SELECT LMEMETIQUETTE FROM TBL_LEAVEMEMBER WHERE MEMCODE=#{memCode})
+		     , (SELECT LMEMPROFILE FROM TBL_LEAVEMEMBER WHERE MEMCODE=#{memCode})
+		     , (SELECT LMEMJOINDATE FROM TBL_LEAVEMEMBER WHERE MEMCODE=#{memCode}))
+	</insert>
+	
+	<!-- 탈퇴테이블 레코드 제거 -->
+	<delete id="deleteLeaveRecord">
+		DELETE
+		FROM TBL_LEAVEMEMBER
+		WHERE MEMCODE=#{memCode}
+	</delete>
+	
+	<!-- 회원 정보 수정 -->
+	<update id="updateMemInfo">
+		UPDATE TBL_MEMBER
+		SET MEMEMAIL=#{memEmail}, MEMETIQUETTE=#{memEtiquette}
+		WHERE MEMCODE=#{memCode}
+	</update>
+	
+
+</mapper>

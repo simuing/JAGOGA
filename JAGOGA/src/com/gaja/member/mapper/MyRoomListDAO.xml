@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    <mapper namespace="com.gaja.member.IMyRoomListDAO">
+    
+    	<!-- 내 숙소목록 조회 -->
+		<select id="myRoomList" resultType="com.gaja.dto.MyRoomDTO">
+			SELECT RTYPE, RNAME, RCODE, RCONTENT, MEMPROFILE, MEMCODE, RREGDATE, RBASICADDR, RDETAILADDR
+			     , RZIPCODE, RAREA, ADULTFEE, CHILDFEE, AVGPOINT, RIMG, VAFTERGRADE, EFFECTIVEDATE
+			FROM VIEW_MYROOMLIST
+			WHERE MEMCODE=#{memCode}
+		</select>
+		
+		<!-- 내 숙소 삭제 -->
+		<!-- <delete id="deleteRoom">
+			{ call PROC_DELROOM(#{rcode}) }
+		</delete> -->
+		
+		
+</mapper>

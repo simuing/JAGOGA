@@ -1,0 +1,319 @@
+@charset "UTF-8";
+
+/* 전체 */
+a.mainbar { color: #FFFFFF; text-decoration: none; font-weight: bold; }
+a.mainbar:hover { color: #FFFFFF; text-decoration: none; cursor: pointer; }
+.table th { background-color: #f1f2f5; margin-top: 5px; height: 20px;}
+
+/* 내비게이션 */
+div.navbar .navbar-default { margin-bottom: 0px; }
+.navbar-default
+{
+	/* position: relative; */
+	width: 100%;
+	position: fixed;
+	z-index: 10;
+	background-color: rgb(0, 135, 163);
+	border-color: #dddddd;
+	border-bottom-color: #dddddd;
+	border-bottom-width: 2px;
+	border-radius: 0px;
+	color: #FFFFFF;
+}
+.navbar-default .navbar-brand,
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus
+{
+	color: #FFFFFF;
+}
+
+.navbar-default .navbar-nav > li > a,
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus
+{
+	padding: 17px 17px;
+	color: #FFFFFF;
+	font-weight: bold;
+}
+.container { }
+
+
+/* 왼쪽 카테고리 탭 */
+#wrapper .sidebar
+{
+	background-color: white;
+}
+.sidebar .nav > li > a:hover,
+.sidebar .nav > li > a:focus,
+ .sidebar .nav > li > a.active
+{
+	background-color: rgb(220, 239, 245);
+	
+}
+
+/* 본문 */
+.box { margin-bottom: 40px; }
+
+.recommend-title { font-size: 15pt; padding-top: 10px; font-weight: bold; }
+.recommend-all { float: right; border:0px;}
+
+.room-item
+{
+	display: inline;
+	margin: auto;
+	margin: 1rem; 
+	float: left;
+	width: 22%;
+	height: 13vw;
+	border: 1px solid gray; 
+}
+.hotkeyword-item { float: left; margin-left: 100px; margin-bottom: 30px;}
+.hotkeyword-item > h1 > a { color: #000000; }
+.container-fluid { border: 0px;}
+
+
+/* 로그인 */
+.login-box
+{
+	-moz-box-shadow: 1px 2px 10px 0 rgba(0, 0, 0, 0.1);
+	-webkit-box-shadow: 1px 2px 10px 0 rgba(0, 0, 0, 0.1);
+	box-shadow: 1px 2px 10px 0 rgba(0, 0, 0, 0.1);
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	width: 500px;
+	height: 350px;
+	margin: 0 auto;
+	background-color: #fff; }
+}
+.btn-primary
+{
+	background-color: rgb(102, 199, 163); 
+	border: none; 
+}
+.login-input
+{
+	padding-top: 7rem;
+	margin: 0 auto;
+	width: 350px;
+}
+.login-title
+{
+	font-size: 2rem;
+}
+.br
+{
+	height: 40px;
+}
+.btn-primary:hover, .btn-primary:focus 
+{ background-color: #389a76102199163; }
+
+/* 고객센터 */
+/* Style the tab */
+.tab {
+    float: left;
+    border: 1px solid #ccc;
+    background-color: #c5c5c5;
+    text-align: center;
+    width: 10%;
+    height: 100%;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+    display: block;
+    background-color: inherit;
+    color: black;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+    background-color: #f3f3f3;
+}
+
+/* Create an active/current "tab button" class */
+.tab button.active {
+    background-color: #f3f3f3;
+}
+
+/* Style the tab content */
+.tabcontent {
+    float: left;
+    padding: 0px 12px;
+    border: 1px solid #ccc;
+    width: 90%;
+    border-left: none;
+    background-color: #f3f3f3;
+    height: 350px;
+}
+.tabcontent>h4>span
+{
+	margin-right: 3px;
+	color: rgb(102, 199, 163);
+}
+.tabcontent>h4>span.ans
+{
+	margin-right: 3px;
+	color: red;
+}
+
+/* 검증관리 */
+p.gradestate
+{
+	font-size: 6rem;
+	text-align: center;
+}
+p.vfile
+{
+	font-size: 2rem;
+	text-align: center;
+}
+
+/* 숙소관리 */
+.tab-review, .tab-question
+{
+	background: lightgray;
+	color: white;
+	text-align: center;
+	font-size: 15px;
+	padding: 5px;
+}
+.tab-review:hover, .tab-review:active, .tab-review:focus,
+.tab-question:hover, .tab-question:active, .tab-question:focus
+{
+	background: gray;
+}
+
+
+/* 전체 버튼 css */
+.updatebtn, .deletebtn, .unhidebtn
+{
+	background-color: rgb(102, 199, 163);
+	color: white;
+	width: 55px;
+	height: 22px;
+	padding: 0px;
+	margin-left: 3px;
+	border: 0px;
+	border-radius: 5px;
+	text-align: center;
+}
+.insertbtn
+{
+	background-color: rgb(102, 199, 163);
+	color: white;
+	width: 110px;
+	height: 25px;
+	margin-top: 3px;
+	padding: 0px 17px;
+	border: 0px;
+	border-radius: 5px;
+	text-align: center;
+}
+.cancelbtn, .hidebtn
+{
+	background-color: red;
+	color: white;
+	width: 55px;
+	height: 22px;
+	padding: 0px;
+	border: 0px;
+	margin-left: 3px;
+	border-radius: 5px;
+	text-align: center;
+}
+.canceledbtn, .hostcancelbtn, .gestcancelbtn, .usedbtn
+{
+	background-color: #ffbf00;
+	color: white;
+	width: 80px;
+	height: 22px;
+	padding: 0px;
+	border: 0px;
+	margin-left: 3px;
+	border-radius: 5px;
+	text-align: center;
+}
+.canceledbtn:hover, .hostcancelbtn:hover, .gestcancelbtn:hover, .usedbtn:hover,
+.canceledbtn:active, .hostcancelbtn:active, .gestcancelbtn:active, .usedbtn:active
+.canceledbtn:focus, .hostcancelbtn:focus, .gestcancelbtn:focus, .usedbtn:focus
+{
+	background-color: #e18802;
+	color: white;
+}
+.bookingbtn
+{
+	background-color: rgb(102, 199, 163);
+	color: white;
+	width: 80px;
+	height: 22px;
+	padding: 0px;
+	border: 0px;
+	margin-left: 3px;
+	border-radius: 5px;
+	text-align: center;
+}
+.bookingbtn:hover, .bookingbtn:active, .bookingbtn:focus,
+.insertbtn:hover, .insertbtn:active, .insertbtn:focus,
+.updatebtn:hover, .updatebtn::active, .updatebtn:focus,
+.deletebtn:hover, .deletebtn:active, .deletebtn:focus,
+.unhidebtn:hover, .unhidebtn:active, .unhidebtn:focus
+{
+	background-color: #408080102199163;
+	color: white;
+}
+/* 온오프 스위치 CSS */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+}
+.switch input {display:none;}
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+input:checked + .slider {
+  background-color: #2196F3;
+}
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+/* Rounded sliders */
+.slider.round {
+  border-radius: 20px;
+}
+.slider.round:before {
+  border-radius: 50%;
+}

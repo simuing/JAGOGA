@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    <mapper namespace="com.gaja.member.INoticeDAO">
+      
+      <!-- 공지 리스트 전체 조회 -->
+      <select id="noticeList" resultType="com.gaja.dto.VnoticeDTO">
+      <![CDATA[
+         SELECT A.*
+             , COUNT(*) OVER() AS ROWCNT
+         FROM
+         (
+            SELECT T.*
+                , ROWNUM AS RNUM
+            FROM
+            (
+               SELECT NTCODE, NTTITLE, NTREGDATE, NTHIDECHECK, NTHITCOUNT
+               FROM TBL_NOTICE
+               ORDER BY NTCODE DESC
+            )T
+         )A
+         WHERE RNUM > (-10+(#{pageNumber}*10)) AND RNUM <= (#{pageNumber}*10)
+      ]]>   
+         
+      </select>
+      
+      <!-- 회원 공지 검색 -->
+      <select id="searchNotice" resultType="com.gaja.dto.VnoticeDTO">
+         SELECT NTCODE, NTTITLE, NTREGDATE, NTHIDECHECK, NTHITCOUNT
+         FROM TBL_NOTICE
+         WHERE NTTITLE LIKE '%' || #{search} || '%'
+      </select>
+      
+      <!-- 회원 공지클릭시 내용과 같이보기 -->
+      <select id="detailNotice" resultType="com.gaja.dto.VnoticeDTO">
+         SELECT NTCODE, NTTITLE, NTCONTENT, NTATTACH, NTHITCOUNT, NTREGDATE, NTHIDECHECK
+         FROM TBL_NOTICE
+         WHERE NTCODE = #{ntCode}
+      </select>
+      
+      <!-- 카운트수 증가 -->
+      <update id="upCount">
+         UPDATE TBL_NOTICE
+         SET NTHITCOUNT = (NTHITCOUNT+1)
+         WHERE NTCODE = #{ntCode}
+      </update>
+      
+      
+      <!-- 이용가이드 -->
+      <select id="useGuide" resultType="com.gaja.dto.VnoticeDTO">
+         SELECT GU.GCODE "GCODE", GUCA.GCCODE "GCCODE", GU.ADMINCODE "ADMINCODE", GU.GTITLE "GTITLE"
+              , GU.GCONTENT "GCONTENT", GU.GREGDATE "GREGDATE", GU.GMODIFYDATE"GMODIFYDATE"
+         FROM TBL_GUIDE GU LEFT JOIN TBL_GUIDECATEGORY GUCA 
+             ON GUCA.GCCODE = GU.GCODE
+      </select>
+      
+      <!-- 정책및 이용약관 -->
+      <select id="terms" resultType="com.gaja.dto.VnoticeDTO">
+         SELECT TERMSCODE, ADMINCODE, TERMSTITLE, TERMSCONTENT, TERMSREGDATE
+         FROM TBL_TERMS
+         WHERE TERMSCODE =1
+      </select>
+      
+      <!-- 개인정보 취급방침 -->
+      <select id="termsPrivateInfo" resultType="com.gaja.dto.VnoticeDTO">
+         SELECT TERMSCODE, ADMINCODE, TERMSTITLE, TERMSCONTENT, TERMSREGDATE
+         FROM TBL_TERMS
+         WHERE TERMSCODE =2
+      </select>
+      
+   
+    </mapper>

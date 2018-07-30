@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    <mapper namespace="com.gaja.member.IReminderDAO">
+		
+		<!-- 알람 기간, 내용출력 -->
+		<select id="reminderList" resultType="com.gaja.dto.ReminderDTO">
+			SELECT REMCODE, MEMCODE, REMCONTENT, REMDATE
+			FROM TBL_REMINDER
+			WHERE MEMCODE = #{memCode}
+		</select>
+		
+		<!-- 예약 취소 알림 -->
+		<select id="cancelReserve" resultType="com.gaja.dto.ReminderDTO">
+			SELECT MEMCODE, CANCELCODE, CREMCODE, CREMCONTENT, CREMDATE
+			FROM VIEW_CREMINDER
+			WHERE MEMCODE = #{memCode}
+		
+		</select>
+		
+		<!-- 예약 취소 알림 삭제 -->
+		<select id="">
+			DELETE
+			FROM TBL_CANCELREMINDER
+			WHERE CREMCODE = #{cremCode};
+		</select>
+		
+		<!-- 알람 삭제 -->
+		<delete id="deleteReminder" >
+			DELETE
+			FROM TBL_REMINDER
+			WHERE REMCODE = #{remCode}
+		</delete>
+		
+    </mapper>

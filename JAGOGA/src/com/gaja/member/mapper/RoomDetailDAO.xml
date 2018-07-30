@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    <mapper namespace="com.gaja.member.IRoomDetailDAO">
+		
+		<!-- < 숙소 > -->
+		
+		<!-- 숙소 제목, 설명, 주소, 평점, 호스트사진, 요금, 등급 -->
+		<select id="roomInfo" resultType="com.gaja.dto.MyRoomDTO">
+			SELECT RTYPE, RNAME, RCODE, RCONTENT, MEMPROFILE, MEMCODE, RREGDATE, RBASICADDR, RDETAILADDR
+			     , RZIPCODE, RAREA, ADULTFEE, CHILDFEE, AVGPOINT, RIMG, VAFTERGRADE, EFFECTIVEDATE
+			FROM VIEW_MYROOMLIST
+			WHERE RCODE=#{rcode}
+		</select>
+		
+		<!-- 숙소사진들 -->
+		<select id="roomImg" resultType="java.lang.String">
+			SELECT RIMG
+			FROM TBL_ROOMIMAGE
+			WHERE RCODE = #{rcode}
+		</select>
+		
+		<!-- 숙소 편의시설 -->
+		<select id="roomConvenience" resultType="com.gaja.dto.MyRoomDTO">
+			SELECT RCONV.RCODE"RCODE", RCONV.CONVCODE"CONVCODE", CONV.CONVCONTENT"CONVCONTENT"
+			FROM TBL_ROOMCONVENIENCE RCONV LEFT JOIN TBL_CONVENIENCE CONV
+	  		  ON RCONV.CONVCODE = CONV.CONVCODE
+			WHERE RCONV.RCODE=#{rcode}
+		</select>
+		
+		<!-- 숙소 제한사항 -->
+		<select id="roomConstraint" resultType="com.gaja.dto.MyRoomDTO">
+			SELECT RCONS.RCODE"RCODE", CONS.CONSCODE"CONSCODE", CONS.CONSCONTENT"CONSCONTENT"
+			FROM TBL_ROOMCONSTRAINT RCONS LEFT JOIN TBL_CONSTRAINT CONS
+		  	  ON RCONS.CONSCODE = CONS.CONSCODE
+			WHERE RCONS.RCODE=#{rcode}
+		</select>
+		
+		<!-- 숙소 예약가능날짜 조회 -->
+		<select id="bookableDateList" resultType="com.gaja.dto.BookableDateDTO">
+			SELECT BADATECODE, RCODE, STARTDATE, ENDDATE
+			FROM TBL_BOOKABLEDATE
+			WHERE RCODE=#{rcode}
+		</select>
+		
+		<!-- 숙소 예약불가능날짜 조회 -->
+		<select id="unableDateList" resultType="com.gaja.dto.BookableDateDTO">
+		<![CDATA[
+			SELECT T.CHECKINDATE+(LEVEL-1)"STARTDATE"
+			FROM
+			(
+			    SELECT CHECKINDATE, CHECKOUTDATE
+			    FROM VIEW_BOOKING
+			    WHERE CANCELCODE IS NULL
+			      AND RCODE=#{rcode}
+			) T
+			CONNECT BY T.CHECKINDATE+(LEVEL-1) <= T.CHECKOUTDATE-1
+			GROUP BY T.CHECKINDATE+(LEVEL-1)
+			ORDER BY STARTDATE
+		]]>
+		</select>
+		
+		
+		
+		<!-- < 평점 > -->
+		
+		<!-- 평점 부여 가능횟수 체크 --> 
+		<select id="pointCount" resultType="java.lang.Integer">
+			SELECT COUNT(*)
+			FROM TBL_BOOKABLEDATE BA LEFT JOIN TBL_BOOKING B
+			  ON BA.BADATECODE = B.BADATECODE LEFT JOIN TBL_USEDLIST U
+			  ON B.BCODE = U.BCODE LEFT JOIN TBL_POINT P
+			  ON U.ULISTCODE = P.ULISTCODE
+			WHERE U.ULISTCODE IS NOT NULL
+			  AND P.ULISTCODE IS NULL
+			  AND B.MEMCODE=#{memCode}
+			  AND BA.RCODE=#{rcode}
+		</select>
+		
+		<!-- 평점을 부여할 이용내역코드 추출 -->
+		<select id="getPointUlistCode" resultType="java.lang.Integer">
+			SELECT U.ULISTCODE AS ULISTCODE
+			FROM TBL_BOOKABLEDATE BA LEFT JOIN TBL_BOOKING B
+			  ON BA.BADATECODE = B.BADATECODE LEFT JOIN TBL_USEDLIST U
+			  ON B.BCODE = U.BCODE LEFT JOIN TBL_REVIEW R
+			  ON U.ULISTCODE = R.ULISTCODE
+			WHERE U.ULISTCODE IS NOT NULL
+			  AND R.ULISTCODE IS NULL
+			  AND B.MEMCODE=1 --(? 자리)
+			  AND BA.RCODE=1
+			  AND ROWNUM=1
+		</select>
+		
+		<!-- 평점 주기 -->
+		<insert id="insertPoint">
+			INSERT INTO TBL_POINT (POINTCODE, ULISTCODE, POINT, POINTDATE) 
+			VALUES(SEQPOINT.NEXTVAL, #{ulistCode}, #{point}, SYSDATE)
+		</insert>
+		
+		
+		
+		<!-- < 후기 > -->
+		
+		<!-- 후기 목록 조회 -->
+		<select id="roomReview" resultType="com.gaja.dto.MyRoomDTO">
+			SELECT RCODE, REVCODE, REVTITLE, REVCONTENT, GID, GMEMETIQUETTE, REGDATE, REVANS, HID ,REVANSDATE, HIDEDATE, HIDECAUSE, ADMINID
+			FROM VIEW_REVIEWLIST
+			WHERE RCODE=#{rcode}
+		</select>
+		
+		<!-- 후기 사진 조회 -->
+		<select id="reviewImage" resultType="com.gaja.dto.MyRoomDTO">
+			SELECT REVIMGCODE, REVIMG
+			FROM TBL_REVIEWIMAGE
+			WHERE REVCODE = (SELECT REVCODE
+	               		 	 FROM VIEW_REVIEWLIST
+	              		     WHERE RCODE=#{rcode} AND REVCODE=#{revCode})
+		</select>
+		
+		<!-- 해당 회원이 후기를 쓸 수 있는 횟수 조회 -->
+		<select id="reviewCount" resultType="java.lang.Integer">
+			SELECT COUNT(*)
+			FROM TBL_BOOKABLEDATE BA LEFT JOIN TBL_BOOKING B
+			  ON BA.BADATECODE = B.BADATECODE LEFT JOIN TBL_USEDLIST U
+			  ON B.BCODE = U.BCODE LEFT JOIN TBL_REVIEW R
+			  ON U.ULISTCODE = R.ULISTCODE
+			WHERE U.ULISTCODE IS NOT NULL
+			  AND R.ULISTCODE IS NULL
+			  AND B.MEMCODE=#{memCode}
+			  AND BA.RCODE=#{rcode}
+		</select>
+		
+		<!-- 해당 회원의 이용내역코드 중 하나를 추출 (여러개일 수 있으므로) -->
+		<select id="getReviewUlistCode" resultType="java.lang.Integer">
+			SELECT U.ULISTCODE AS ULISTCODE
+			FROM TBL_BOOKABLEDATE BA LEFT JOIN TBL_BOOKING B
+			  ON BA.BADATECODE = B.BADATECODE LEFT JOIN TBL_USEDLIST U
+			  ON B.BCODE = U.BCODE LEFT JOIN TBL_REVIEW R
+			  ON U.ULISTCODE = R.ULISTCODE
+			WHERE U.ULISTCODE IS NOT NULL
+			  AND R.ULISTCODE IS NULL
+			  AND B.MEMCODE=#{memCode}
+			  AND BA.RCODE=#{rcode}
+			  AND ROWNUM=1
+		</select>
+		
+		<!-- 후기 등록 -->
+		<insert id="insertReview">
+			INSERT INTO TBL_REVIEW (REVCODE, ULISTCODE, REVTITLE, REVCONTENT, REGDATE, REVHIDE)
+			VALUES(SEQREVIEW.NEXTVAL, #{ulistCode}, #{revTitle}, #{revContent}, SYSDATE, 'N')
+		</insert>
+		
+		<!-- 후기 답변 등록 -->
+		<insert id="insertReviewAns">
+			INSERT INTO TBL_REVIEWANSWER (REVANSCODE, REVCODE, REVANS, REVANSDATE)
+			VALUES(SEQREVIEWANSWER.NEXTVAL, #{revCode}, #{revAns}, SYSDATE)
+		</insert>
+		
+		<!-- 1. 후기 답변 제거 -->
+		<delete id="deleteReviewAns">
+			DELETE
+			FROM TBL_REVIEWANSWER
+			WHERE REVCODE = #{revCode}
+		</delete>
+		<!-- 2. 후기 이미지 제거 -->
+		<delete id="deleteReviewImage">
+			DELETE
+			FROM TBL_REVIEWIMAGE
+			WHERE REVCODE = #{revCode}
+		</delete>
+		<!-- 3. 숨긴후기삭제 --><!-- 원래없어야 맞지만 인서트구문 오류방지 -->
+		<delete id="deleteHideReview">
+			DELETE
+			FROM TBL_HIDEREVIEW
+			WHERE REVCODE = #{revCode}
+		</delete>
+		<!-- 4. 후기 삭제 -->
+		<delete id="deleteReview">
+			DELETE
+			FROM TBL_REVIEW
+			WHERE REVCODE = #{revCode}
+		</delete>
+		
+		
+		
+		<!-- < 숙소문의 > -->
+		
+		<!-- 숙소문의 목록 조회  -->
+		<select id="roomQuestion" resultType="com.gaja.dto.MyRoomDTO">
+			SELECT RCODE, RQSTCODE, RQSTANSCODE, RQSTTITLE, RQSTCONTENT, GID, MEMETIQUETTE,  RQSTDATE
+			     , CLOSECHECK, HID, RQSTANS, RQSTANSDATE, HIDEDATE, HIDECAUSE, ADMINID
+			FROM VIEW_RQSTLIST
+			WHERE RCODE=#{rcode}
+		</select>
+		
+		<!-- 숙소문의 등록 -->
+		<insert id="insertRoomQuestion">
+			INSERT INTO TBL_ROOMQUESTION (RQSTCODE, RCODE, MEMCODE, RQSTTITLE, RQSTCONTENT, RQSTDATE, CLOSECHECK)
+			VALUES(SEQROOMQUESTION.NEXTVAL, #{rcode}, #{memCode}, #{rqstTitle}, #{rqstContent}, SYSDATE, #{closeCheck})
+		</insert>
+		
+		<!-- 숙소문의답변 등록 -->
+		<insert id="insertRoomQuestionAns">
+			INSERT INTO TBL_RQSTANSWER (RQSTANSCODE, RQSTCODE, RQSTANS, RQSTANSDATE)
+			VALUES(SEQRQSTANSWER.NEXTVAL, #{rqstCode}, #{rqstAns}, SYSDATE);
+		</insert>
+		
+		<!-- 숙소문의답변 삭제 -->
+		<delete id="deleteRoomQuestionAns">
+			DELETE
+			FROM TBL_RQSTANSWER
+			WHERE RQSTANSCODE=#{rqstAnsCode}
+		</delete>
+
+		<!-- 숙소문의 삭제 -->
+		<delete id="deleteRoomQuestion">
+			DELETE
+			FROM TBL_ROOMQUESTION
+			WHERE RQSTCODE=#{rqstCode}
+		</delete>
+		 
+    </mapper>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    <mapper namespace="com.gaja.admin.IAdminNoticeDAO">
+   	
+   	<!-- 공지 전체목록 조회 -->
+  	<select id="adminNoticeList" resultType="com.gaja.dto.VadminNoticeDTO">
+	<![CDATA[
+		SELECT A.*
+			 , COUNT(*) OVER() AS ROWCNT
+		FROM
+		(
+			SELECT T.*
+				 , ROWNUM AS RNUM
+			FROM
+			(
+				SELECT NTCODE, NTTITLE, NTCONTENT, NTATTACH, NTHITCOUNT, NTREGDATE, ADMINCODE, ADMINID
+		    		 , DECODE(NTHIDECHECK, 'N', '공개', '비공개') AS NTHIDECHECK
+				FROM VIEW_NOTICE
+				ORDER BY NTCODE DESC
+			)T
+		)A
+		WHERE RNUM > (-10+(#{pageNumber}*10)) AND RNUM <= (#{pageNumber}*10)
+	]]>
+
+  	</select>
+  	
+  	<!-- 공지 제목으로 검색조회 -->
+  	<select id="adminTitleNoticeList" resultType="com.gaja.dto.VadminNoticeDTO">
+	  	SELECT GCODE, GCCODE, GCCONTENT, GTITLE, GCONTENT, GREGDATE, GMODIFYDATE, ADMINCODE, ADMINID, ADMINNAME
+		FROM VIEW_GUIDE
+		WHERE GTITLE LIKE '%' || #{gTitle} || '%'
+  	</select>
+  	<!-- 공지 작성자아이디로 검색조회 -->
+   	<select id="adminIdNoticeList" resultType="com.gaja.dto.VadminNoticeDTO">
+	   	SELECT GCODE, GCCODE, GCCONTENT, GTITLE, GCONTENT, GREGDATE, GMODIFYDATE, ADMINCODE, ADMINID, ADMINNAME
+		FROM VIEW_GUIDE
+		<where>
+		WHERE ADMINID LIKE '%' || #{adminId} || '%'
+		</where>
+   	</select>
+   	
+   	<!-- 공지 숨김상태 변경 -->
+   	<update id="adminHideChange">
+	   	UPDATE TBL_NOTICE
+		SET NTHIDECHECK= #{ntHideCheck}
+		WHERE NTCODE = #{ntCode}
+   	</update>
+   	
+   	<!-- 이용가이드 조회 -->
+   	<select id="adminGuide" resultType="com.gaja.dto.GuideDTO">
+   	SELECT GCODE, GCCODE, GCCONTENT, GTITLE, GCONTENT, GREGDATE, GMODIFYDATE, ADMINCODE, ADMINID, ADMINNAME
+	FROM VIEW_GUIDE
+   	</select>
+   	
+   	<!-- 공지 등록 -->
+   	<insert id="noticeInsert">
+   	INSERT INTO TBL_NOTICE(NTCODE, ADMINCODE, NTTITLE, NTCONTENT, NTATTACH, NTHITCOUNT, NTMODIFYDATE, NTREGDATE, NTHIDECHECK)
+	VALUES(SEQNOTICE.NEXTVAL, #{adminCode }, #{ntTitle }, #{ntContent }, #{ntAttach }, DEFAULT, NULL, SYSDATE , 'Y')
+	</insert>
+	
+	<!-- 특정 공지 조회 -->
+   	<select id="noticeInfo" resultType="com.gaja.dto.VadminNoticeDTO">
+   	SELECT ntTitle, ntContent
+	FROM TBL_NOTICE
+	WHERE NTCODE=#{ntCode}
+   	</select>
+   	
+   	<!-- 공지 수정 -->
+   	<update id="noticeUpdate">
+	   	UPDATE TBL_NOTICE
+		SET NTTITLE=#{ntTitle}, NTCONTENT=#{ntContent}
+		WHERE NTCODE=#{ntCode}
+   	</update>
+   	
+
+   </mapper>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+    <mapper namespace="com.gaja.member.IMemberMainDAO">
+	
+		<!-- 인기방 리스트 출력 -->
+		<select id="bestRoomList" resultType="com.gaja.dto.VsearchRoomDTO">
+			SELECT RCODE, RNAME, ADULTFEE, AVGPOINT, RIMG
+			FROM VIEW_BESTROOM
+		</select>
+		
+		<!-- 가장많은 연령대 추출 -->
+		<select id="mostAge" resultType="java.lang.Integer">
+			SELECT AGE
+			FROM VIEW_COUNTAGE
+			WHERE COUNT = (SELECT MAX(COUNT) FROM VIEW_COUNTAGE)
+		</select>
+		
+		<!-- 로그인된 회원 연령대 구하기 -->
+		<select id="getMemberAge" resultType="java.lang.Integer">
+			SELECT FLOOR((TO_NUMBER(TO_CHAR(SYSDATE, 'YYYY')) - TO_NUMBER(CONCAT('19', SUBSTR(MEMSSN, 1, 2))) + 1)/10)*10 AS AGE
+			FROM TBL_MEMBER
+			WHERE MEMCODE=#{memCode}
+		</select>
+		
+		<!-- 해당 연령대 추천 리스트 출력 -->
+		<select id="ageRoomList" resultType="com.gaja.dto.VsearchRoomDTO">
+			SELECT RCODE, RNAME, ADULTFEE, RIMG, AVGPOINT
+			FROM VIEW_RECOMMENDAGE
+			WHERE AGE=#{age}
+		</select>
+		
+		<!-- 인기키워드 추천 리스트 출력 -->
+		<select id="bestKeywordList" resultType="java.lang.String">
+			SELECT SEARCHWORD
+			FROM TBL_SEARCH
+			GROUP BY SEARCHWORD
+			ORDER BY COUNT(SEARCHWORD) DESC
+		</select>
+	
+    </mapper>

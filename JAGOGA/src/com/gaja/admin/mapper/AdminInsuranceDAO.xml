@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gaja.admin.IAdminInsuranceDAO">
+
+	<!-- 게스트 보험 정보 조회 -->
+	<!-- ICODE 1번은 게스트, 2번은 호스트 -->
+	<select id="guestInsu" resultType="com.gaja.dto.VinsuranceDTO">
+		SELECT ICODE, ADMINCODE, ITYPE, ICOMPANY, ICONTENT, IRATE, IREGDATE, IMODIFYDATE
+		FROM TBL_INSURANCE
+		WHERE ICODE = 1
+	</select>
+	
+	<!-- 보험 정보 조회 -->
+	<select id="hostInsu" resultType="com.gaja.dto.VinsuranceDTO">
+		SELECT ICODE, ADMINCODE, ITYPE, ICOMPANY, ICONTENT, IREGDATE, IMODIFYDATE
+		FROM TBL_INSURANCE
+		WHERE ICODE = 2	
+	</select>
+
+	<!-- 호스트 보험 정보 수정 -->
+	<update id="insuUpdate">
+		UPDATE TBL_INSURANCE
+		SET ADMINCODE = #{adminCode}, ICOMPANY = #{icompany}
+		, ICONTENT=#{icontent}, IRATE=#{irate}, IMODIFYDATE=SYSDATE
+		WHERE ICODE=#{icode}
+	</update>
+	
+	<!-- 게스트 보험료 비율 조회 -->
+	<select id="guestInsuRate" resultType="java.lang.Integer">
+		SELECT IRATE
+		FROM TBL_INSURANCE
+		WHERE ICODE = 1
+	</select>
+	
+	<!-- 호스트 보험료 비율 조회 -->
+	<select id="hostInsuRate" resultType="java.lang.Integer">
+		SELECT IRATE
+		FROM TBL_INSURANCE
+		WHERE ICODE = 2
+	</select>
+
+	<!-- 호스트 보험료 비율 수정 -->
+	<update id="iRateUpdate">
+		UPDATE TBL_INSURANCE
+		SET ADMINCODE = #{adminCode}, IRATE=#{irate}, IMODIFYDATE=SYSDATE
+		WHERE ICODE=#{icode}
+	</update>
+	
+	<!-- 게스트 보험약관 조회 -->
+	<!-- TERMSCODE 4번 게스트보험 정책, 5번 호스트보험 정책.  -->
+	<select id="guestInsuTerms" resultType="com.gaja.dto.TermsDTO">
+		SELECT TERMSCODE, TERMSTITLE, TERMSCONTENT, TERMSREGDATE, TERMSMODIFYDATE, ADMINCODE
+		FROM TBL_TERMS
+		WHERE TERMSCODE = 4
+	</select>
+
+	<!-- 호스트 보험약관 조회 -->
+	<select id="hostInsuTerms" resultType="com.gaja.dto.TermsDTO">
+		SELECT TERMSCODE, TERMSTITLE, TERMSCONTENT, TERMSREGDATE, TERMSMODIFYDATE, ADMINCODE
+		FROM TBL_TERMS
+		WHERE TERMSCODE = 5
+	</select>
+
+	<!-- 보험약관 수정 -->
+	<update id="insuTermsUpdate">
+		UPDATE TBL_TERMS
+		SET TERMSCONTENT = #{termsContent}, TERMSMODIFYDATE = SYSDATE, ADMINCODE = #{adminCode}
+		WHERE TERMSCODE = #{termsCode}
+	</update>
+	
+	
+</mapper>
+
+	

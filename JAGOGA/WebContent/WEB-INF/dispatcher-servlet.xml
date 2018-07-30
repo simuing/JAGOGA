@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans">
+	
+	<!-- ※ Annotation 표기법으로 Controller 객체를 등록한다. -->
+	<!-- → Annotation 표기법으로 작성된 Controller 객체를 스프링 컨테이너가 자동 스캔할 수 있도록 처리. -->
+	<!-- → 『base-package』 속성에 Controller 객체가 포함된 패키지 경로를 지정한다. -->
+	<context:component-scan base-package="com.gaja.admin" />
+	<context:component-scan base-package="com.gaja.member" />
+	
+	<!-- ※ mybatis 에서 dataSource 를 사용하기 위한 환경 설정 추가 -->
+	<bean id="localDataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+		<property name="driverClass" value="oracle.jdbc.driver.OracleDriver"/>
+		<property name="url" value="jdbc:oracle:thin:@211.238.142.158:1521:xe"/>
+		<property name="username" value="gaja"/>
+		<property name="password" value="jagogaja"/>
+	</bean>
+	
+	<!-- 회원전용 SqlSessionFactory 객체 생성 -->
+	<!-- ※ mybatis 를 사용하기 위한 환경 설정 추가 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="localDataSource" />
+		<property name="mapperLocations" value="classpath:com/gaja/member/mapper/*.xml" />
+	</bean>
+	
+	<!-- 회원전용 SqlSession 객체 생성 -->
+	<!-- ※ mybatis 를 사용하기 위한 환경 설정 추가 2 -->
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactory"/>
+	</bean>
+	
+	
+	
+	<!-- 관리자전용 SqlSessionFactory 객체 생성 -->
+	<!-- ※ mybatis 를 사용하기 위한 환경 설정 추가 -->
+	<bean id="adminSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="localDataSource" />
+		<property name="mapperLocations" value="classpath:com/gaja/admin/mapper/*.xml" />
+	</bean>
+	
+	<!-- 관리자전용 SqlSession 객체 생성 -->
+	<!-- ※ mybatis 를 사용하기 위한 환경 설정 추가 2 -->
+	<bean id="adminSqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="adminSqlSessionFactory"/>
+	</bean>
+	
+</beans>

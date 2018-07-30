@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    <mapper namespace="com.gaja.member.IInsertRoomDAO">
+	
+	<!-- InsertRoom1. 호스트 서비스 정책 및 이용약관 조회 -->
+	<select id="hostTerms" resultType="com.gaja.dto.TermsDTO">
+		SELECT TERMSCODE, ADMINCODE, TERMSTITLE, TERMSCONTENT, TERMSREGDATE
+		FROM TBL_TERMS
+		WHERE TERMSCODE=5
+	</select>
+	
+	<!-- InsertRoom2. 숙소유형 목록 조회 -->
+	<select id="roomTypeList" resultType="com.gaja.dto.RoomTypeDTO">
+		SELECT RTYPECODE, RTYPE
+		FROM TBL_ROOMTYPE
+		ORDER BY RTYPECODE
+	</select>
+	
+	<!-- InsertRoom2. 편의시설 목록 조회 -->
+	<select id="convList" resultType="com.gaja.dto.ConvenienceDTO">
+		SELECT CONVCODE, CONVCONTENT
+		FROM TBL_CONVENIENCE
+		ORDER BY CONVCODE
+	</select>
+	
+	<!-- InsertRoom2. 제한사항 목록 조회 -->
+	<select id="consList" resultType="com.gaja.dto.ConstraintDTO">
+		SELECT CONSCODE, CONSCONTENT
+		FROM TBL_CONSTRAINT
+		ORDER BY CONSCODE
+	</select>
+	
+	
+	
+	<!-- InsertRoom3. 1. 선택된 숙소유형 조회 -->
+	<select id="pickRoomType" resultType="com.gaja.dto.RoomTypeDTO">
+		SELECT RTYPECODE, RTYPE
+		FROM TBL_ROOMTYPE
+		WHERE RTYPECODE=#{rtypeCode}
+	</select>
+	
+	<!-- InsertRoom3. 2. 선택된 편의시설 목록 조회 -->
+	<select id="pickConv" resultType="com.gaja.dto.ConvenienceDTO">
+		SELECT CONVCODE, CONVCONTENT
+		FROM TBL_CONVENIENCE
+		WHERE CONVCODE=#{rconvCode}
+	</select>
+	
+	<!-- InsertRoom3. 3. 선택된 제한사항 목록 조회 -->
+	<select id="pickCons" resultType="com.gaja.dto.ConstraintDTO">
+		SELECT CONSCODE, CONSCONTENT
+		FROM TBL_CONSTRAINT
+		WHERE CONSCODE=#{rconsCode}
+	</select>
+	
+	
+	
+	<!-- InsertRoom4. 1.숙소코드 입력 -->
+	<insert id="insertRoomCode">
+		INSERT INTO TBL_ROOMCODE(RCODE, MEMCODE)
+		VALUES(SEQROOMCODE.NEXTVAL, #{memCode})
+	</insert>
+	
+	<!-- InsertRoom4. 2.입력된 숙소코드 가져오기 -->
+	<select id="getRoomCode" resultType="java.lang.Integer">
+		SELECT MAX(RCODE) AS RCODE
+		FROM TBL_ROOMCODE
+		WHERE MEMCODE = #{memCode}
+	</select>
+	
+	<!-- InsertRoom4. 3.숙소 입력 -->
+	<insert id="insertRoom">
+		INSERT INTO TBL_ROOM(RCODE, RTYPECODE, RNAME, RCONTENT, MINHUMANCOUNT, MAXHUMANCOUNT
+		                   , RBASICADDR, RDETAILADDR, RZIPCODE, RAREA, RREGDATE, RMODIFYDATE
+		                   , ADULTFEE, CHILDFEE)
+		VALUES(#{rcode}, #{rtypeCode}, #{rname}, #{rcontent}, #{minHumanCount}, #{maxHumanCount}
+		     , #{rbasicAddr}, #{rdetailAddr}, #{rzipCode}, #{rarea}, SYSDATE, NULL
+		     , #{adultFee}, #{childFee})
+	</insert>
+	
+	<!-- InsertRoom4. 4.숙소 편의사항 입력 -->
+	<insert id="insertRoomConv">
+		INSERT INTO TBL_ROOMCONVENIENCE (RCONVCODE, RCODE, CONVCODE, CONVDATE)
+		VALUES(SEQROOMCONVENIENCE.NEXTVAL, #{rcode}, #{convCode}, SYSDATE)
+	</insert>
+	
+	<!-- InsertRoom4. 5.숙소 제한사항 입력 -->
+	<insert id="insertRoomCons">
+		INSERT INTO TBL_ROOMCONSTRAINT(RCONSCODE, RCODE, CONSCODE, CONSDATE)
+		VALUES(SEQROOMCONSTRAINT.NEXTVAL, #{rcode}, #{consCode}, SYSDATE)
+	</insert>
+	
+	<!-- InsertRoom4. 6.예약가능날짜 입력 -->
+	<insert id="insertBookableDate">
+		INSERT INTO TBL_BOOKABLEDATE (BADATECODE, RCODE, STARTDATE, ENDDATE)
+		VALUES(SEQBOOKABLEDATE.NEXTVAL, #{rcode}, #{startDate}, #{endDate})
+	</insert>
+	
+	<!-- InsertRoom4. 7.숙소 이미지 입력 -->
+	<insert id="insertRoomImage">
+		INSERT INTO TBL_ROOMIMAGE (RIMGCODE, RCODE, RIMG)
+		VALUES(SEQROOMIMAGE.NEXTVAL, #{rcode}, #{rimg})
+	</insert>
+	
+</mapper>
