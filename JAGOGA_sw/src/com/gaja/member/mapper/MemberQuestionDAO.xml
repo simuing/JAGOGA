@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    <mapper namespace="com.gaja.member.IMemberQuestionDAO">
+    
+    <!-- 추후 수정 -->
+	
+	<!-- 자주묻는문의 (FAQ) 문의분류별 목록조회 -->
+	<!-- dto 여러값 받기 -->
+	<select id="faqList" resultType="com.gaja.dto.VfaqDTO">  
+		SELECT QSTCCODE, QSTCCONTENT, FAQCODE, FAQTITLE, FAQCONTENT, FAQANS, FAQREGDATE, FAQMODIFYDATE
+			 , ADMINCODE, ADMINID, ADMINNAME
+		FROM VIEW_FAQ
+		WHERE QSTCCODE=#{qstcCode}
+	</select>
+	
+	<!-- 자주묻는문의 상세조회 -->
+	<select id="faq" resultType="com.gaja.dto.VfaqDTO">
+		SELECT QSTCCODE, QSTCCONTENT, FAQCODE, FAQTITLE, FAQCONTENT, FAQANS, FAQREGDATE, FAQMODIFYDATE
+			 , ADMINCODE, ADMINID, ADMINPW, ADMINNAME
+		FROM VIEW_FAQ
+		WHERE FAQCODE=#{faqCode}
+	</select>
+	
+	<!-- 내 문의 목록조회 -->
+	<select id="myQuestionList" resultType="com.gaja.dto.VquestionDTO">
+		SELECT QSTCODE, QSTCCONTENT, QSTTITLE, QSTCONTENT, MEMID, QSTATTACH, QSTDATE
+			 , ADMINID, ADMINANS, ADMINANSDATE, CASE WHEN QSTANSCODE IS NOT NULL THEN '답변완료' ELSE '답변대기' END AS QSTANSSTATE
+		FROM VIEW_QUESTION
+		WHERE MEMCODE = #{memCode} ORDER BY QSTCODE
+	</select>
+	
+	
+	<!-- 내 문의 상세조회 (답변포함) -->
+	<select id="myQuestionDetail" resultType="com.gaja.dto.VquestionDTO">
+		SELECT QSTCODE, QSTCCONTENT, QSTTITLE, QSTCONTENT, MEMID, QSTATTACH, QSTDATE, ADMINID
+			 , ADMINANS, ADMINANSDATE, CASE WHEN QSTANSCODE IS NOT NULL THEN '답변완료' ELSE '답변대기' END AS QSTANSSTATE
+		FROM VIEW_QUESTION
+		WHERE QSTCODE=#{qstCode}
+		ORDER BY QSTCODE
+	</select>
+	
+	
+	<!-- 내 문의 등록 -->
+	<insert id="myQuestionInsert">
+		INSERT INTO TBL_QUESTION(QSTCODE, QSTCCODE, MEMCODE, QSTTITLE, QSTCONTENT, QSTATTACH, QSTDATE)
+		VALUES(SEQQUESTION.NEXTVAL, #{qstcCode}, #{memCode}, #{qstTitle}, #{qstContent}, #{qstAttach}, SYSDATE)
+	</insert>
+	
+	<!-- 카테고리 조회 추가 -->
+	<select id="categorySearch" resultType="com.gaja.dto.VquestionDTO">
+		SELECT QSTCCODE, QSTCCONTENT
+		FROM TBL_QUESTIONCATEGORY
+	</select>
+
+    </mapper>
